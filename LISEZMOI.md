@@ -99,6 +99,8 @@ Pour tout autre outil, écrivez son script avec `type="text/plain"` et `data-con
 
 ## Mise en ligne
 
+**Adresse du site : https://nolout-beta.vercel.app** (aussi https://nolout-nolout.vercel.app).
+
 **Vercel, depuis GitHub.** Le dossier `nolout/` est un dépôt Git, envoyé sur GitHub : https://github.com/ninjaproduction062-netizen/nolout. Vercel (équipe Nolout) y est relié et utilise `site/` comme racine : chaque envoi sur la branche `main` met le site en ligne à jour. Pour publier une modification, régénérez les pages, puis enregistrez et envoyez les changements : `git add -A`, `git commit -m "…"` et `git push`. Le projet garde la protection standard de Vercel : l'adresse publique du site est ouverte à tous, les versions de test sont réservées à l'équipe.
 
 Le dépôt est public. N'y mettez jamais de mot de passe ni de clé. Les photos originales de `sources/photos/` restent sur ce PC : elles sont exclues par `.gitignore`.
