@@ -30,7 +30,7 @@
       { "jours": "Samedi", "heures": "9 h – 13 h" }
     ],
     "itineraire": "",
-    "formulaireEndpoint": ""
+    "formulaireEndpoint": "/api/contact"
   },
 
   "cookies": {
