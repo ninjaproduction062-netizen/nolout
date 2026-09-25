@@ -1,0 +1,16 @@
+# Paquet pour cPanel, refait à la demande (voir LISEZMOI)
+nolout-site.zip
+
+# Photos originales non recadrées : elles restent sur ce PC (le dépôt est public)
+sources/photos/
+
+# Dépendances et réglages locaux de Vercel
+node_modules/
+.vercel/
+.env*
+
+# Fichiers système
+._*
+.DS_Store
+Thumbs.db
+desktop.ini

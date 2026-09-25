@@ -1,0 +1,11 @@
+# Fins de ligne : Windows pour les scripts lancés sur ce PC, automatique pour le reste
+* text=auto
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Fichiers binaires
+*.mp4 binary
+*.jpg binary
+*.png binary
+*.webp binary
+*.zip binary

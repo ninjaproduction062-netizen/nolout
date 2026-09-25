@@ -1,0 +1,312 @@
+{
+  "_aide": [
+    "Contenu du site NOLOUT SARLU (maquettes v2, thème sombre).",
+    "Après modification, lancez sources/generer.cmd : les pages HTML du dossier site/ sont régénérées.",
+    "Les textes entre [crochets] sont des données à fournir par le client : ils restent visibles tant qu'ils ne sont pas remplacés.",
+    "Téléphones et WhatsApp : laissez \"\" tant que le numéro n'est pas connu. Le site affiche alors « +243 [numéro] » et le lien mène à la page Contact.",
+    "whatsapp : chiffres uniquement, indicatif compris (ex. 243812345678). telephone : format affiché (ex. +243 81 234 5678).",
+    "orbite : place de départ du département sur le schéma de l'accueil, où les six départements tournent autour de NOLOUT. Angle en degrés : 0 = à droite, 90 = en bas, 180 = à gauche, -90 = en haut. Gardez 60° d'écart entre deux départements.",
+    "Bandeau de logos de l'accueil (accueil.partenaires) : une entrée par logo, avec le nom de la marque ou du client et le fichier (ex. logos/nom.png dans site/assets/img/), recadré au ras du logo. Chaque logo s'affiche dans ses couleurs sur une carte claire. fond : autre couleur de carte, par exemple pour un logo clair. ajustement cover : l'image remplit la carte (photo). Sans fichier, la carte affiche [logo]. rangees : 1 ou 2 bandes qui défilent.",
+    "Publicité de l'accueil (accueil.pub) : vidéo lue en boucle, sans le son, quand elle est à l'écran. fichier : vidéo MP4 déposée dans site/assets/video/ (ou adresse https complète). affiche : image JPG du même dossier, montrée avant la lecture. Avec plusieurs vidéos, elles s'enchaînent puis la liste recommence. Sans vidéo, l'emplacement affiche « Vidéo publicitaire à venir ». lien : lien facultatif sous le texte (libelle et href, ex. contact/#formulaire).",
+    "Photos de réalisations : accueil.realisations (image et alt) et, dans chaque département, references.photos (jusqu'à trois, avec fichier et alt). Chemins dans site/assets/img/ (ex. realisations/nom.jpg), images recadrées au format 16:10 (1200 x 750). Originaux dans sources/photos/.",
+    "image des départements : chemin dans site/assets/img/. Vide = emplacement « photo à venir ». ajustement : cover (photo recadrée au format 4:3), contain (image entière) ou logo (image entière avec marge). fond : couleur ou dégradé CSS derrière l'image."
+  ],
+
+  "groupe": {
+    "nom": "NOLOUT",
+    "raisonSociale": "NOLOUT SARLU",
+    "signature": "Innover. Exceller. Impacter.",
+    "annee": "2026",
+    "rccm": "[numéro]",
+    "idNat": "[numéro]",
+    "numeroImpot": "[numéro]",
+    "telephone": "",
+    "whatsapp": "",
+    "email": "contact@nolout.cd",
+    "adresse": "[Adresse], [Commune], Kinshasa, RDC",
+    "adresseCourte": "[Adresse], Kinshasa",
+    "horaires": [
+      { "jours": "Lun – ven", "heures": "8 h 30 – 17 h 30" },
+      { "jours": "Samedi", "heures": "9 h – 13 h" }
+    ],
+    "itineraire": "",
+    "formulaireEndpoint": ""
+  },
+
+  "cookies": {
+    "_aide": "Outils de mesure, chargés uniquement si le visiteur les accepte. googleAnalytics : identifiant GA4 (ex. G-ABC123XYZ), catégorie Mesure d'audience. metaPixel : identifiant du pixel Meta/Facebook (ex. 123456789012345), catégorie Marketing. Laissez vide si l'outil n'est pas utilisé.",
+    "googleAnalytics": "",
+    "metaPixel": ""
+  },
+
+  "navigation": [
+    { "libelle": "Le groupe", "page": "groupe" },
+    { "libelle": "Départements", "page": "departements", "megamenu": true },
+    { "libelle": "Réalisations", "page": "realisations" },
+    { "libelle": "Carrières", "page": "carrieres" },
+    { "libelle": "Investisseurs", "page": "investisseurs" }
+  ],
+
+  "departements": [
+    {
+      "code": "hek",
+      "slug": "hekima-consulting",
+      "nom": "Hekima Consulting",
+      "court": "Hekima",
+      "tag": "Conseil",
+      "domaine": "Conseil · stratégie",
+      "base": "#2F7DE1",
+      "clair": "#6FA8F0",
+      "rgb": "47,125,225",
+      "icone": "target",
+      "orbite": -120,
+      "resume": "Conseil en stratégie, organisation et accompagnement des entreprises et des institutions.",
+      "servicesCles": ["Stratégie et développement", "Organisation et performance", "Formation des équipes"],
+      "pitch": "Nous aidons dirigeants et institutions à clarifier leur stratégie, structurer leur organisation et mener leurs projets jusqu’au résultat.",
+      "cta": "Prendre rendez-vous",
+      "role": "Associé·e, Hekima Consulting",
+      "email": "hekima@nolout.cd",
+      "telephone": "",
+      "whatsapp": "",
+      "servicesTitre": "Du diagnostic à la mise en œuvre",
+      "servicesIntro": "Des missions construites avec vos équipes, sur des objectifs mesurables et un calendrier tenu.",
+      "services": [
+        { "icone": "target", "titre": "Stratégie et développement", "texte": "Diagnostic, plan stratégique, étude de marché." },
+        { "icone": "org", "titre": "Organisation et performance", "texte": "Structuration, processus, gouvernance et tableaux de bord." },
+        { "icone": "flag", "titre": "Accompagnement de projets", "texte": "Pilotage, suivi des bailleurs et conduite du changement." },
+        { "icone": "users", "titre": "Formation des équipes", "texte": "Programmes sur mesure pour cadres et managers." }
+      ],
+      "references": { "etiquette": "Mission", "meta": "[Client] · [année]", "titre": "[Titre de la mission]" },
+      "image": { "fichier": "departements/hekima-consulting.png", "alt": "Logo Hekima Consulting", "ajustement": "logo", "fond": "#0A1B33" },
+      "exempleMessage": "Décrivez votre organisation et l’objectif de la mission."
+    },
+    {
+      "code": "con",
+      "slug": "nolout-construction",
+      "nom": "Nolout Construction",
+      "court": "Construction",
+      "tag": "BTP",
+      "domaine": "Construction · BTP",
+      "base": "#E0662A",
+      "clair": "#F08A55",
+      "rgb": "224,102,42",
+      "icone": "build",
+      "orbite": -60,
+      "resume": "Études, construction et suivi de chantier, du bâtiment aux infrastructures.",
+      "servicesCles": ["Études et conception", "Construction et réhabilitation", "Suivi de chantier"],
+      "pitch": "Études, construction et suivi de chantier, avec des délais tenus et des comptes rendus clairs à chaque étape.",
+      "cta": "Demander un devis",
+      "role": "Responsable commercial·e, Nolout Construction",
+      "email": "construction@nolout.cd",
+      "telephone": "",
+      "whatsapp": "",
+      "servicesTitre": "De l’étude à la réception",
+      "servicesIntro": "Un interlocuteur unique pour concevoir, bâtir et livrer vos ouvrages.",
+      "services": [
+        { "icone": "plan", "titre": "Études et conception", "texte": "Relevés, plans, métrés et estimation budgétaire." },
+        { "icone": "build", "titre": "Construction de bâtiments", "texte": "Résidentiel, bureaux et bâtiments publics." },
+        { "icone": "tools", "titre": "Réhabilitation", "texte": "Rénovation, mise aux normes et extension." },
+        { "icone": "check", "titre": "Suivi de chantier", "texte": "Planning, contrôle qualité et rapports hebdomadaires." }
+      ],
+      "references": { "etiquette": "Ouvrage", "meta": "[Lieu] · [année]", "titre": "[Nom de l’ouvrage]" },
+      "image": { "fichier": "departements/nolout-construction.webp", "alt": "Logo Nolout Construction", "ajustement": "contain", "fond": "linear-gradient(180deg, #161511, #060503)" },
+      "exempleMessage": "Type d’ouvrage, lieu, surface approximative et délai souhaité."
+    },
+    {
+      "code": "baz",
+      "slug": "le-bazar-de-chacha-et-loulou",
+      "nom": "Le Bazar de Chacha et Loulou",
+      "court": "Le Bazar",
+      "tag": "Commerce",
+      "domaine": "Commerce · lifestyle",
+      "base": "#3A9D4F",
+      "clair": "#5CC271",
+      "rgb": "58,157,79",
+      "icone": "bag",
+      "orbite": 180,
+      "resume": "Une sélection d’articles pour la maison, la mode et le quotidien.",
+      "servicesCles": ["Maison et décoration", "Mode et accessoires", "Livraison à Kinshasa"],
+      "pitch": "Une sélection d’articles pour la maison, la mode et le quotidien, en boutique et en livraison à Kinshasa.",
+      "cta": "Passer commande",
+      "role": "Responsable boutique, Le Bazar",
+      "email": "bazar@nolout.cd",
+      "telephone": "",
+      "whatsapp": "",
+      "servicesTitre": "Choisir, commander, recevoir",
+      "servicesIntro": "Des produits sélectionnés et un service simple, en boutique comme à distance.",
+      "services": [
+        { "icone": "build", "titre": "Maison et décoration", "texte": "Linge, vaisselle, objets et petit mobilier." },
+        { "icone": "users", "titre": "Mode et accessoires", "texte": "Vêtements, sacs et bijoux pour toute la famille." },
+        { "icone": "check", "titre": "Commande sur WhatsApp", "texte": "Photos, disponibilité et paiement confirmés par message." },
+        { "icone": "flag", "titre": "Livraison à Kinshasa", "texte": "Livraison par commune ou retrait en boutique." }
+      ],
+      "references": { "etiquette": "Sélection", "meta": "[Collection] · [saison]", "titre": "[Nom de la sélection]" },
+      "image": { "fichier": "", "alt": "", "ajustement": "cover", "fond": "" },
+      "exempleMessage": "Article recherché, quantité, livraison ou retrait."
+    },
+    {
+      "code": "com",
+      "slug": "nolout-communication",
+      "nom": "Nolout Communication",
+      "court": "Communication",
+      "tag": "Média",
+      "domaine": "Communication · média",
+      "base": "#D8345F",
+      "clair": "#F06A8C",
+      "rgb": "216,52,95",
+      "icone": "mega",
+      "orbite": 0,
+      "resume": "Stratégie de marque, création, production média et marketing digital.",
+      "servicesCles": ["Stratégie de marque", "Création et campagnes", "Production vidéo et photo"],
+      "pitch": "Stratégie de marque, création et diffusion : nous faisons connaître ce que vous faites.",
+      "cta": "Parler de votre projet",
+      "role": "Directeur·rice conseil, Nolout Communication",
+      "email": "communication@nolout.cd",
+      "telephone": "",
+      "whatsapp": "",
+      "servicesTitre": "De l’idée à la diffusion",
+      "servicesIntro": "Une équipe qui conçoit, produit et mesure.",
+      "services": [
+        { "icone": "target", "titre": "Stratégie de marque", "texte": "Positionnement, identité et plateforme de marque." },
+        { "icone": "flag", "titre": "Création", "texte": "Campagnes, supports imprimés et digitaux." },
+        { "icone": "users", "titre": "Réseaux sociaux", "texte": "Animation, contenus et communauté." },
+        { "icone": "check", "titre": "Production média", "texte": "Vidéo, photo et audio." }
+      ],
+      "references": {
+        "etiquette": "Campagne", "meta": "[Client] · [année]", "titre": "[Campagne]",
+        "photos": [
+          { "fichier": "realisations/nolout-communication-portrait.jpg", "alt": "Portrait en studio réalisé par Nolout Communication" },
+          { "fichier": "realisations/nolout-communication-evenement.jpg", "alt": "Intervenante au micro lors d’un événement photographié par Nolout Communication, en noir et blanc" }
+        ]
+      },
+      "image": { "fichier": "", "alt": "", "ajustement": "cover", "fond": "" },
+      "exempleMessage": "Votre marque, l’objectif de la campagne et l’échéance."
+    },
+    {
+      "code": "game",
+      "slug": "nolout-game",
+      "nom": "Nolout Game",
+      "court": "Game",
+      "tag": "Gaming",
+      "domaine": "Gaming · digital",
+      "base": "#8A5CE6",
+      "clair": "#AE8CF2",
+      "rgb": "138,92,230",
+      "icone": "game",
+      "orbite": 120,
+      "resume": "Jeux, divertissement et expériences numériques.",
+      "servicesCles": ["Espaces de jeu", "Tournois et événements", "Activations de marque"],
+      "pitch": "Jeux, événements et expériences numériques pour le public et pour les marques.",
+      "cta": "Proposer un partenariat",
+      "role": "Responsable, Nolout Game",
+      "email": "game@nolout.cd",
+      "telephone": "",
+      "whatsapp": "",
+      "servicesTitre": "Jouer, rassembler, créer",
+      "servicesIntro": "Du divertissement grand public aux projets numériques sur mesure.",
+      "services": [
+        { "icone": "target", "titre": "Espaces de jeu", "texte": "Consoles, PC et tournois en accès libre." },
+        { "icone": "users", "titre": "Événements et tournois", "texte": "Compétitions et soirées gaming." },
+        { "icone": "flag", "titre": "Activations de marque", "texte": "Expériences interactives pour les annonceurs." },
+        { "icone": "plan", "titre": "Développement", "texte": "Jeux et applications ludiques sur mesure." }
+      ],
+      "references": { "etiquette": "Projet", "meta": "[Partenaire] · [année]", "titre": "[Nom du projet]" },
+      "image": { "fichier": "departements/nolout-game.webp", "alt": "Visuel Nolout Game", "ajustement": "cover", "fond": "#12060A" },
+      "exempleMessage": "Projet de jeu, événement ou partenariat envisagé."
+    },
+    {
+      "code": "tra",
+      "slug": "nolout-transport",
+      "nom": "Nolout Transport",
+      "court": "Transport",
+      "tag": "Logistique",
+      "domaine": "Transport · logistique",
+      "base": "#14908F",
+      "clair": "#3CC0BE",
+      "rgb": "20,144,143",
+      "icone": "truck",
+      "orbite": 60,
+      "resume": "Transport de marchandises et solutions logistiques.",
+      "servicesCles": ["Transport de marchandises", "Entreposage", "Suivi des livraisons"],
+      "pitch": "Transport de marchandises et solutions logistiques, avec un suivi clair de chaque livraison.",
+      "cta": "Demander une cotation",
+      "role": "Responsable exploitation, Nolout Transport",
+      "email": "transport@nolout.cd",
+      "telephone": "",
+      "whatsapp": "",
+      "servicesTitre": "Du chargement à la livraison",
+      "servicesIntro": "Des trajets planifiés et un interlocuteur joignable à chaque étape.",
+      "services": [
+        { "icone": "flag", "titre": "Transport de marchandises", "texte": "Urbain et interurbain, lots complets ou groupés." },
+        { "icone": "build", "titre": "Entreposage", "texte": "Stockage sécurisé et gestion des stocks." },
+        { "icone": "plan", "titre": "Logistique sur mesure", "texte": "Planification des flux pour entreprises et chantiers." },
+        { "icone": "check", "titre": "Suivi des livraisons", "texte": "Confirmation d’enlèvement et de réception." }
+      ],
+      "references": { "etiquette": "Opération", "meta": "[Client] · [année]", "titre": "[Nom de l’opération]" },
+      "image": { "fichier": "departements/nolout-transport.webp", "alt": "Logo Nolout Transport", "ajustement": "logo", "fond": "#F4F6F8" },
+      "exempleMessage": "Marchandise, trajet, volume et date."
+    }
+  ],
+
+  "accueil": {
+    "titrePage": "NOLOUT SARLU — Groupe multisectoriel à Kinshasa",
+    "description": "NOLOUT SARLU regroupe six départements à Kinshasa : conseil, construction, commerce, communication, gaming et transport. Un seul interlocuteur pour mener vos projets de bout en bout.",
+    "pastille": "Six départements, une seule maison",
+    "titre": "Plusieurs expertises.",
+    "titreOr": "Une même vision.",
+    "intro": "Conseil, construction, commerce, communication, divertissement et transport. NOLOUT relie des métiers complémentaires pour mener vos projets de bout en bout.",
+    "partenairesTitre": "Les marques du groupe NOLOUT",
+    "partenaires": {
+      "rangees": 1,
+      "logos": [
+        { "nom": "Hekima Consulting", "fichier": "logos/hekima-consulting.png" },
+        { "nom": "Nolout Construction", "fichier": "logos/nolout-construction.jpg", "ajustement": "cover", "fond": "#0E0D0B" },
+        { "nom": "Le Bazar de Chacha et Loulou", "fichier": "logos/le-bazar-de-chacha-et-loulou.png" },
+        { "nom": "Nolout Communication", "fichier": "logos/nolout-communication.png" },
+        { "nom": "Nolout Transport", "fichier": "logos/nolout-transport.png" }
+      ]
+    },
+    "pub": {
+      "surtitre": "À l’affiche",
+      "titre": "[Titre de la publicité]",
+      "texte": "[Deux ou trois phrases pour présenter la publicité diffusée ici.]",
+      "lien": { "libelle": "", "href": "" },
+      "videos": [
+        { "fichier": "kev-appel-en-action.mp4", "affiche": "kev-appel-en-action.jpg" }
+      ]
+    },
+    "chiffres": [
+      { "valeur": "6", "libelle": "départements sous une même gouvernance", "compteur": true },
+      { "valeur": "[année]", "libelle": "année de création à Kinshasa" },
+      { "valeur": "[nombre]", "libelle": "collaborateurs" },
+      { "valeur": "[nombre]", "libelle": "projets livrés" }
+    ],
+    "methodeSurtitre": "Comment nous travaillons",
+    "methodeTitre": "Un seul interlocuteur, toutes les compétences du groupe",
+    "etapes": [
+      { "titre": "Vous nous décrivez le besoin", "texte": "Un formulaire, un appel ou un message WhatsApp. Nous identifions le ou les départements concernés." },
+      { "titre": "Nous assemblons l’équipe", "texte": "Un chef de projet unique mobilise les compétences du groupe : conseil, construction, communication, transport." },
+      { "titre": "Nous livrons et suivons", "texte": "Délais tenus, comptes rendus réguliers et un interlocuteur joignable jusqu’à la fin du projet." }
+    ],
+    "realisations": [
+      { "departement": "hek", "titre": "[Titre de la mission de conseil]", "meta": "[Client] · [année]", "image": "" },
+      { "departement": "con", "titre": "[Titre du chantier livré]", "meta": "[Lieu] · [année]", "image": "" },
+      { "departement": "com", "titre": "[Titre de la campagne]", "meta": "[Client] · [année]", "image": "realisations/nolout-communication-portrait.jpg", "alt": "Portrait en studio réalisé par Nolout Communication" }
+    ],
+    "temoignages": [
+      { "departement": "hek", "texte": "[Témoignage client à recueillir, deux à trois phrases.]", "auteur": "[Nom, fonction]" },
+      { "departement": "con", "texte": "[Témoignage client à recueillir, deux à trois phrases.]", "auteur": "[Nom, fonction]" },
+      { "departement": "com", "texte": "[Témoignage client à recueillir, deux à trois phrases.]", "auteur": "[Nom, fonction]" }
+    ]
+  },
+
+  "pagesEnPreparation": [
+    { "page": "groupe", "titre": "Le groupe", "texte": "Histoire, vision, valeurs, mot du fondateur et gouvernance de NOLOUT SARLU." },
+    { "page": "realisations", "titre": "Réalisations", "texte": "Les projets menés par nos six départements, filtrables par département." },
+    { "page": "actualites", "titre": "Actualités", "texte": "Les nouvelles du groupe et de ses départements." },
+    { "page": "carrieres", "titre": "Carrières", "texte": "Nos offres d’emploi et la candidature spontanée." },
+    { "page": "investisseurs", "titre": "Investisseurs", "texte": "Le profil du groupe et les documents à télécharger." },
+    { "page": "mentions-legales", "titre": "Mentions légales", "texte": "Éditeur du site, hébergement, RCCM, identification nationale et numéro d’impôt de NOLOUT SARLU." },
+    { "page": "confidentialite", "titre": "Politique de confidentialité", "texte": "Les données collectées par le formulaire de contact, les cookies utilisés sur ce site et vos droits sur vos informations." }
+  ]
+}

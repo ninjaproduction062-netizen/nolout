@@ -1,0 +1,12 @@
+{
+  "name": "nolout-site",
+  "private": true,
+  "description": "Site NOLOUT SARLU : pages statiques (site/) et fonctions Vercel (site/api/) reliées à la base Neon.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0"
+  }
+}
