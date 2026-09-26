@@ -14,17 +14,21 @@ export default async function handler(req, res) {
     return res.status(308).end();
   }
 
+  // X-Nolout-Contenu indique d'où vient le contenu : « base » (Neon) ou le contenu initial de secours
   let contenu;
+  let source = process.env.DATABASE_URL ? 'base' : 'initial-sans-base';
   try {
     contenu = await lireContenu('publie');
   } catch (erreur) {
     // Base momentanément injoignable : le site reste en ligne avec le contenu initial
     console.error('Lecture du contenu impossible :', erreur);
     contenu = contenuInitial;
+    source = 'initial-erreur';
   }
 
   const rendu = creerRendu(contenu);
   const html = rendu.rendreAdresse(chemin);
+  res.setHeader('X-Nolout-Contenu', source);
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   res.setHeader('Vercel-CDN-Cache-Control', 'max-age=60, stale-while-revalidate=86400');
