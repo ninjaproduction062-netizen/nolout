@@ -1,42 +1,19 @@
 // Formulaire de contact : chaque demande est enregistrée dans la base Neon (table « demandes »).
 // Le formulaire (contact/) envoie en JSON : departement, equipe, destinataire, nom, entreprise,
 // email, telephone, message, site_web (champ piège, invisible, que seuls les robots remplissent).
-// DATABASE_URL est fournie par l'intégration Neon du projet Vercel : aucun mot de passe dans le code.
-import { neon } from '@neondatabase/serverless';
+import { base, preparerBase } from '../lib/base.js';
 
 const DEPARTEMENTS = new Set(['hek', 'con', 'baz', 'com', 'game', 'tra', '?']);
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const texte = (valeur, max) => (typeof valeur === 'string' ? valeur.trim().slice(0, max) : '');
-
-// La table est créée au premier envoi, puis on ne le vérifie plus pour cette instance
-let tablePrete = false;
-async function preparerTable(sql) {
-  if (tablePrete) return;
-  await sql`
-    CREATE TABLE IF NOT EXISTS demandes (
-      id            bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-      recue_le      timestamptz NOT NULL DEFAULT now(),
-      departement   text NOT NULL,
-      equipe        text NOT NULL,
-      destinataire  text,
-      nom           text NOT NULL,
-      entreprise    text,
-      email         text NOT NULL,
-      telephone     text,
-      message       text NOT NULL,
-      statut        text NOT NULL DEFAULT 'nouvelle'
-    )`;
-  tablePrete = true;
-}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ ok: false, erreur: 'Méthode non autorisée' });
   }
-  if (!process.env.DATABASE_URL) {
-    return res.status(503).json({ ok: false, erreur: 'Base de données non reliée' });
-  }
+  const sql = base();
+  if (!sql) return res.status(503).json({ ok: false, erreur: 'Base de données non reliée' });
 
   let corps = req.body;
   if (typeof corps === 'string') {
@@ -63,8 +40,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const sql = neon(process.env.DATABASE_URL);
-    await preparerTable(sql);
+    await preparerBase(sql);
     await sql`
       INSERT INTO demandes (departement, equipe, destinataire, nom, entreprise, email, telephone, message)
       VALUES (${demande.departement}, ${demande.equipe}, ${demande.destinataire || null}, ${demande.nom},

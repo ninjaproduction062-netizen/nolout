@@ -1,0 +1,15 @@
+{
+  "name": "nolout-site",
+  "private": true,
+  "description": "Site NOLOUT SARLU : pages fabriquées à partir du contenu (base Neon en ligne, sources/contenu.json sur un poste), fonctions Vercel dans api/.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "generer": "node scripts/generer.mjs"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0"
+  }
+}

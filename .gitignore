@@ -4,6 +4,13 @@ nolout-site.zip
 # Photos originales non recadrées : elles restent sur ce PC (le dépôt est public)
 sources/photos/
 
+# Pages fabriquées : en ligne, Vercel les fabrique à la demande (api/page.js) ;
+# sur ce poste, scripts/generer.mjs les écrit pour l'aperçu local
+/site/index.html
+/site/*/index.html
+/site/*/*/index.html
+!/site/admin/**
+
 # Dépendances et réglages locaux de Vercel
 node_modules/
 .vercel/
