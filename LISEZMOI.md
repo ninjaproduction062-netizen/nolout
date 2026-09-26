@@ -4,19 +4,36 @@ Reproduction des maquettes v2 (thème sombre) du dossier `A2` : cahier de passat
 
 ## Organisation
 
-- `site/` : le site à mettre en ligne. Ce dossier se publie tel quel, chez n'importe quel hébergeur statique (GitHub Pages, Netlify, cPanel…).
+En ligne, Vercel fabrique chaque page à la demande à partir du contenu publié dans la base Neon, puis la garde une minute en cache. Le contenu se modifie depuis l'administration (`/admin/`).
+
+- `site/` : fichiers servis tels quels.
   - `assets/css/nolout.css` : tokens du design system (couleurs groupe et départements, typographie, rayons) et composants.
   - `assets/js/nolout.js` : mégamenu, menu mobile, schéma des départements, compteurs, publicité vidéo, formulaire de contact.
-  - `assets/img/` : logo, favicon, logos du bandeau et visuels des départements.
+  - `assets/img/` : logo, favicon, logos du bandeau, visuels des départements et photos de réalisations.
   - `assets/video/` : vidéo publicitaire de l'accueil et son image d'affiche.
-- `sources/` : ce qu'on modifie.
-  - `contenu.json` : textes, couleurs, coordonnées et contenu des six départements.
-  - `generer.ps1` : fabrique les pages HTML de `site/` à partir de `contenu.json`.
-  - `generer.cmd` : double-clic pour régénérer les pages.
+  - `admin/` : page d'administration (`index.html`, `admin.css`, `admin.js`).
+- `lib/` : code partagé par les fonctions.
+  - `rendu.js` : fabrique les pages HTML à partir du contenu (réécriture JavaScript de l'ancien générateur PowerShell, pages identiques au caractère près).
+  - `contenu.js` : lit le contenu publié ou le brouillon dans la table `contenus` de Neon.
+  - `base.js` : connexion à Neon et création des tables. `auth.js` : mots de passe et sessions de l'administration.
+- `api/` : fonctions Vercel. `page.js` fabrique les pages publiques, `contact.js` enregistre les demandes du formulaire, `admin.js` sert l'administration.
+- `vercel.json` : routage. Les fichiers de `site/` d'abord, puis les fonctions, puis toute autre adresse vers `api/page.js`.
+- `sources/` : contenu initial et outils du poste.
+  - `contenu.json` : contenu de départ, versé dans la base au premier lancement. Il sert aussi de contenu de secours si la base est injoignable, et d'aperçu local.
+  - `generer.cmd` : fabrique les pages dans `site/` à partir de `contenu.json`, pour l'aperçu sur ce poste (avec Node.js).
   - `preparer-video.cmd` (et `preparer-video.ps1`) : glisser une vidéo dessus pour en faire la version web de la publicité.
-- `site/api/` : fonctions Vercel (enregistrement des demandes du formulaire dans Neon) ; `site/package.json` en déclare les dépendances.
+- `scripts/` : `generer.mjs` (pages locales) et `serveur-local.mjs` (aperçu qui imite Vercel : `node scripts/serveur-local.mjs`, puis http://localhost:3000/).
 
-Pour changer un texte, un numéro ou ajouter un département, modifiez `sources/contenu.json` puis double-cliquez sur `sources/generer.cmd`. La feuille de style, le JavaScript et les images se modifient directement dans `site/assets/`, sans régénération.
+La feuille de style, le JavaScript et les images se modifient dans `site/assets/`, puis s'envoient sur GitHub. Vercel met alors le site à jour tout seul.
+
+## Administration
+
+Adresse : https://nolout-beta.vercel.app/admin/
+
+- **Connexion :** chaque membre de l'équipe a son compte. Les mots de passe sont chiffrés (scrypt) dans la table `comptes`, et la session tient dans un cookie signé, valable 12 heures. Après 5 essais manqués, un compte est bloqué 15 minutes.
+- **Premier compte :** il ne se crée que depuis l'adresse propre au déploiement (du type `https://nolout-xxxx-nolout.vercel.app/admin/`, visible dans Vercel, onglet Deployments). Vercel protège cette adresse et exige d'être connecté au compte Vercel du site. Ensuite, on ajoute les autres membres depuis l'onglet « Équipe ».
+- **Demandes :** celles du formulaire de contact, avec filtres, statut (nouvelle, en cours, traitée) et suppression.
+- **Contenus :** l'étape suivante. Textes, témoignages, réalisations, pub vidéo, logos, chiffres clés et coordonnées, avec un bouton « Publier ».
 
 ## Pages
 
