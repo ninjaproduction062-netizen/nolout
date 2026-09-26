@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Administration — NOLOUT</title>
+<meta name="theme-color" content="#061120">
+<link rel="icon" href="/assets/img/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&amp;family=Poppins:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="/assets/css/nolout.css">
+<link rel="stylesheet" href="/admin/admin.css">
+<script src="/admin/admin.js" defer></script>
+</head>
+<body class="ad">
+<p class="ad-chargement" data-ecran="chargement">Chargement…</p>
+
+<!-- Connexion -->
+<main class="ad-porte" data-ecran="connexion" hidden>
+  <div class="ad-porte__carte">
+    <p class="ad-porte__marque"><img src="/assets/img/logo-nolout.webp" alt="" width="34" height="34"><span>NOLOUT</span></p>
+    <h1 class="ad-porte__titre">Administration du site</h1>
+    <form class="ad-form" data-form="connexion" novalidate>
+      <label class="nl-champ__label" for="cx-email">Adresse e-mail</label>
+      <input class="nl-champ__input" id="cx-email" name="email" type="email" autocomplete="username" required>
+      <label class="nl-champ__label" for="cx-mdp">Mot de passe</label>
+      <input class="nl-champ__input" id="cx-mdp" name="motDePasse" type="password" autocomplete="current-password" required>
+      <p class="ad-message" data-message role="alert"></p>
+      <button type="submit" class="nl-btn nl-btn--or">Se connecter</button>
+    </form>
+  </div>
+</main>
+
+<!-- Premier compte : seulement depuis l'adresse protégée de Vercel -->
+<main class="ad-porte" data-ecran="premier-compte" hidden>
+  <div class="ad-porte__carte">
+    <p class="ad-porte__marque"><img src="/assets/img/logo-nolout.webp" alt="" width="34" height="34"><span>NOLOUT</span></p>
+    <h1 class="ad-porte__titre">Créer le premier compte</h1>
+    <p class="ad-porte__texte">Ce compte gérera le site et pourra ensuite ajouter les membres de l’équipe. Choisissez un mot de passe d’au moins 10 caractères : il est chiffré, personne ne peut le lire, pas même nous.</p>
+    <form class="ad-form" data-form="premier-compte" novalidate>
+      <label class="nl-champ__label" for="pc-nom">Votre nom</label>
+      <input class="nl-champ__input" id="pc-nom" name="nom" type="text" autocomplete="name" required>
+      <label class="nl-champ__label" for="pc-email">Adresse e-mail</label>
+      <input class="nl-champ__input" id="pc-email" name="email" type="email" autocomplete="username" required>
+      <label class="nl-champ__label" for="pc-mdp">Mot de passe</label>
+      <input class="nl-champ__input" id="pc-mdp" name="motDePasse" type="password" autocomplete="new-password" minlength="10" required>
+      <label class="nl-champ__label" for="pc-mdp2">Confirmez le mot de passe</label>
+      <input class="nl-champ__input" id="pc-mdp2" name="confirmation" type="password" autocomplete="new-password" minlength="10" required>
+      <p class="ad-message" data-message role="alert"></p>
+      <button type="submit" class="nl-btn nl-btn--or">Créer mon compte</button>
+    </form>
+  </div>
+</main>
+
+<!-- Aucun compte, mais adresse publique : explication -->
+<main class="ad-porte" data-ecran="installation" hidden>
+  <div class="ad-porte__carte">
+    <p class="ad-porte__marque"><img src="/assets/img/logo-nolout.webp" alt="" width="34" height="34"><span>NOLOUT</span></p>
+    <h1 class="ad-porte__titre">Administration à installer</h1>
+    <p class="ad-porte__texte">Aucun compte n’existe encore. Par sécurité, le premier compte se crée depuis l’adresse protégée du site chez Vercel, qui demande d’abord de se connecter au compte Vercel de NOLOUT. Ensuite, l’administration s’utilise depuis cette adresse-ci.</p>
+  </div>
+</main>
+
+<!-- Administration -->
+<div class="ad-app" data-ecran="app" hidden>
+  <header class="ad-barre">
+    <a class="ad-marque" href="/" title="Voir le site"><img src="/assets/img/logo-nolout.webp" alt="" width="30" height="30"><span>NOLOUT</span><span class="ad-marque__sous">Administration</span></a>
+    <nav class="ad-onglets" aria-label="Rubriques">
+      <button type="button" class="ad-onglet" data-onglet="demandes" aria-current="page">Demandes <span class="ad-compteur" data-nouvelles hidden></span></button>
+      <button type="button" class="ad-onglet" data-onglet="contenus">Contenus</button>
+      <button type="button" class="ad-onglet" data-onglet="equipe">Équipe</button>
+      <button type="button" class="ad-onglet" data-onglet="compte">Mon compte</button>
+    </nav>
+    <div class="ad-barre__fin">
+      <span class="ad-barre__nom" data-nom></span>
+      <button type="button" class="nl-btn nl-btn--verre nl-btn--petit" data-deconnexion>Se déconnecter</button>
+    </div>
+  </header>
+
+  <main class="ad-contenu">
+    <!-- Demandes du formulaire -->
+    <section class="ad-panneau" data-panneau="demandes" aria-labelledby="t-demandes">
+      <div class="ad-panneau__tete">
+        <div>
+          <h1 class="ad-titre" id="t-demandes">Demandes reçues</h1>
+          <p class="ad-intro">Chaque demande envoyée depuis le formulaire de contact du site arrive ici.</p>
+        </div>
+        <div class="ad-filtres">
+          <label class="ad-filtre"><span>Statut</span>
+            <select data-filtre="statut">
+              <option value="">Tous</option>
+              <option value="nouvelle">Nouvelles</option>
+              <option value="en cours">En cours</option>
+              <option value="traitée">Traitées</option>
+            </select>
+          </label>
+          <label class="ad-filtre"><span>Département</span>
+            <select data-filtre="departement">
+              <option value="">Tous</option>
+              <option value="hek">Hekima Consulting</option>
+              <option value="con">Nolout Construction</option>
+              <option value="baz">Le Bazar de Chacha et Loulou</option>
+              <option value="com">Nolout Communication</option>
+              <option value="game">Nolout Game</option>
+              <option value="tra">Nolout Transport</option>
+              <option value="?">À orienter</option>
+            </select>
+          </label>
+          <button type="button" class="nl-btn nl-btn--verre nl-btn--petit" data-actualiser>Actualiser</button>
+        </div>
+      </div>
+      <p class="ad-message" data-message-demandes role="status"></p>
+      <ul class="ad-demandes" data-demandes></ul>
+    </section>
+
+    <!-- Contenus du site (étape suivante) -->
+    <section class="ad-panneau" data-panneau="contenus" aria-labelledby="t-contenus" hidden>
+      <h1 class="ad-titre" id="t-contenus">Contenus du site</h1>
+      <p class="ad-intro">Bientôt ici : textes, témoignages, réalisations, pub vidéo, logos, chiffres clés et coordonnées, avec un bouton « Publier ».</p>
+    </section>
+
+    <!-- Équipe -->
+    <section class="ad-panneau" data-panneau="equipe" aria-labelledby="t-equipe" hidden>
+      <h1 class="ad-titre" id="t-equipe">Équipe</h1>
+      <p class="ad-intro">Les personnes qui peuvent se connecter à l’administration.</p>
+      <ul class="ad-comptes" data-comptes></ul>
+      <form class="ad-form ad-form--ligne" data-form="nouveau-compte" novalidate>
+        <h2 class="ad-sous-titre">Ajouter une personne</h2>
+        <div class="ad-champs">
+          <label><span class="nl-champ__label">Nom</span><input class="nl-champ__input" name="nom" type="text" required></label>
+          <label><span class="nl-champ__label">Adresse e-mail</span><input class="nl-champ__input" name="email" type="email" required></label>
+          <label><span class="nl-champ__label">Mot de passe provisoire (10 caractères ou plus)</span><input class="nl-champ__input" name="motDePasse" type="password" autocomplete="new-password" minlength="10" required></label>
+        </div>
+        <p class="ad-message" data-message role="alert"></p>
+        <button type="submit" class="nl-btn nl-btn--or nl-btn--petit">Ajouter</button>
+      </form>
+    </section>
+
+    <!-- Mon compte -->
+    <section class="ad-panneau" data-panneau="compte" aria-labelledby="t-compte" hidden>
+      <h1 class="ad-titre" id="t-compte">Mon compte</h1>
+      <form class="ad-form ad-form--etroit" data-form="mot-de-passe" novalidate>
+        <h2 class="ad-sous-titre">Changer de mot de passe</h2>
+        <label class="nl-champ__label" for="mp-actuel">Mot de passe actuel</label>
+        <input class="nl-champ__input" id="mp-actuel" name="actuel" type="password" autocomplete="current-password" required>
+        <label class="nl-champ__label" for="mp-nouveau">Nouveau mot de passe (10 caractères ou plus)</label>
+        <input class="nl-champ__input" id="mp-nouveau" name="nouveau" type="password" autocomplete="new-password" minlength="10" required>
+        <p class="ad-message" data-message role="alert"></p>
+        <button type="submit" class="nl-btn nl-btn--or nl-btn--petit">Enregistrer</button>
+      </form>
+    </section>
+  </main>
+</div>
+</body>
+</html>
