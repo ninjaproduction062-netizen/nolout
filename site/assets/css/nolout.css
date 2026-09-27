@@ -894,20 +894,24 @@ button.nl-pub__lancer:hover { background: var(--nl-gold-300); transform: transla
 .nl-pause[aria-pressed="true"] .nl-pause__pause,
 .nl-pause[aria-pressed="false"] .nl-pause__lecture { display: none; }
 
-/* Chiffres clés */
-.nl-chiffres { padding-top: 96px; padding-bottom: 96px; }
+/* Chiffres clés : cartes compactes, quatre par ligne sur grand écran, deux sur tablette et téléphone */
+.nl-chiffres { padding-top: 56px; padding-bottom: 56px; }
+.nl-chiffres .nl-grille { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 900px) {
+  .nl-chiffres .nl-grille { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
 .nl-chiffre {
   container-type: inline-size;   /* le chiffre s'adapte à la largeur de sa carte */
   min-width: 0;
-  display: flex; flex-direction: column; gap: 8px;
-  padding: 28px;
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 18px 20px;
   border: 1px solid var(--nl-bord-12);
   border-radius: var(--nl-r-carte);
   background: var(--nl-navy-900);
 }
-/* 48 px (maquette), réduit seulement si la carte est trop étroite pour « [nombre] » */
-.nl-chiffre__valeur { font: 800 min(48px, 20cqi)/1.08 var(--nl-titre); color: var(--nl-gold-500); font-variant-numeric: tabular-nums; }
-.nl-chiffre__libelle { font: 400 15px/22px var(--nl-texte); color: var(--nl-silver-300); }
+/* 34 px, réduit seulement si la carte est trop étroite (téléphone) */
+.nl-chiffre__valeur { font: 800 min(34px, 22cqi)/1.1 var(--nl-titre); color: var(--nl-gold-500); font-variant-numeric: tabular-nums; }
+.nl-chiffre__libelle { font: 400 14px/20px var(--nl-texte); color: var(--nl-silver-300); }
 
 /* Cartes */
 .nl-carte {

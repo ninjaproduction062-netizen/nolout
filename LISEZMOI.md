@@ -40,6 +40,8 @@ Adresse : https://nolout-beta.vercel.app/admin/
   - La version remplacée part dans `contenus_historique`. L'historique permet de la remettre dans le brouillon, puis de la publier à nouveau. « Annuler les modifications » ramène le brouillon à la version en ligne.
   - Si deux personnes modifient le brouillon en même temps, la seconde est prévenue au lieu d'écraser le travail de la première.
   - Les photos, les logos et la vidéo se changeront depuis l'administration à l'étape suivante (envoi de fichiers).
+- **Changements livrés avec le code** (`lib/migrations.js`) : un changement de contenu demandé hors de l'administration, par exemple dans la conversation avec Claude, s'écrit comme une entrée de cette liste. Au premier appel après le déploiement, il s'applique une seule fois à la version en ligne (l'ancienne part dans l'historique) et au brouillon, puis il est noté dans la table `contenus_migrations`. Il ne touche jamais une valeur déjà changée dans l'administration. On le reporte aussi dans `sources/contenu.json`.
+- **Chiffres clés :** cochez « Compter depuis 0 » pour qu'un chiffre compte de 0 jusqu'à sa valeur quand il apparaît à l'écran : une étape par quart de seconde jusqu'à 12, puis 2 secondes pour les grands nombres. Le chiffre peut porter un signe (`+40`, `98 %`) : seul le nombre compte.
 
 ## Pages
 

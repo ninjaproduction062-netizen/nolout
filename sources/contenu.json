@@ -279,7 +279,7 @@
       { "valeur": "6", "libelle": "départements sous une même gouvernance", "compteur": true },
       { "valeur": "[année]", "libelle": "année de création à Kinshasa" },
       { "valeur": "[nombre]", "libelle": "collaborateurs" },
-      { "valeur": "[nombre]", "libelle": "projets livrés" }
+      { "valeur": "+40", "libelle": "projets livrés", "compteur": true }
     ],
     "methodeSurtitre": "Comment nous travaillons",
     "methodeTitre": "Un seul interlocuteur, toutes les compétences du groupe",

@@ -176,15 +176,20 @@
     actualiser();
   }
 
-  /* ── Compteurs de chiffres clés : 0 → valeur en 1,2 s, au premier affichage ── */
-  const compteurs = $$('[data-compteur]');
+  /* ── Compteurs de chiffres clés : le chiffre part de 0 et compte jusqu'à sa valeur quand il arrive à l'écran ──
+   * Petit nombre (jusqu'à 12) : une étape tous les quarts de seconde, pour voir 0, 1, 2… 6.
+   * Grand nombre : 2 secondes, en ralentissant à l'arrivée. */
+  const compteurs = $$('[data-compteur]').filter((el) => Number(el.dataset.compteur) > 0);
   if (compteurs.length && !reduit && 'IntersectionObserver' in window) {
     const animer = (el) => {
       const cible = Number(el.dataset.compteur);
+      const petit = cible <= 12;
+      const duree = petit ? cible * 250 : 2000;
       const debut = performance.now();
       const pas = (t) => {
-        const p = Math.min(1, (t - debut) / 1200);
-        el.textContent = String(Math.round(cible * (1 - Math.pow(1 - p, 3))));
+        const p = Math.min(1, (t - debut) / duree);
+        const valeur = petit ? Math.floor(cible * p) : Math.round(cible * (1 - Math.pow(1 - p, 3)));
+        el.textContent = String(p < 1 ? valeur : cible);
         if (p < 1) requestAnimationFrame(pas);
       };
       requestAnimationFrame(pas);
@@ -196,7 +201,10 @@
         animer(en.target);
       });
     }, { threshold: 0.6 });
-    compteurs.forEach((el) => io.observe(el));
+    compteurs.forEach((el) => {
+      el.textContent = '0';
+      io.observe(el);
+    });
   }
 
   /* ── Témoignages : apparition au défilement, carte après carte (modèle campus.ena.gouv.cd) ──

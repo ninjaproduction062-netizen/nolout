@@ -282,7 +282,7 @@
             champs: [
               { cle: 'valeur', libelle: 'Chiffre', exemple: '120' },
               { cle: 'libelle', libelle: 'Légende', exemple: 'projets livrés' },
-              { cle: 'compteur', type: 'case', libelle: 'Animer le chiffre de 0 à sa valeur (nombre entier uniquement)' },
+              { cle: 'compteur', type: 'case', libelle: 'Compter depuis 0 quand le chiffre apparaît (nombre entier, avec un signe si besoin : 120, +40, 98 %)' },
             ] },
         ],
       },
