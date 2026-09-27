@@ -5,6 +5,7 @@
     { "src": "^/admin(/.*)?$", "headers": { "X-Frame-Options": "DENY", "X-Robots-Tag": "noindex, nofollow", "Cache-Control": "no-cache" }, "continue": true },
     { "handle": "filesystem" },
     { "src": "^/api/.*$", "status": 404 },
+    { "src": "^/apercu(/.*)?$", "dest": "/api/apercu?chemin=$1" },
     { "src": "^/(.*)$", "dest": "/api/page?chemin=/$1" }
   ]
 }

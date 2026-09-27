@@ -1,8 +1,9 @@
 // Pages publiques du site, fabriquées à la demande à partir du contenu publié (base Neon),
-// puis gardées en cache par Vercel : une modification publiée apparaît en une minute environ.
+// puis gardées en cache par Vercel. « Publier » vide ce cache (étiquette « pages ») : la page
+// suivante est refaite aussitôt ; à défaut, le cache se renouvelle de lui-même en une minute.
 // vercel.json envoie ici toute adresse qui n'est pas un fichier (images, vidéo, feuilles de style…).
 import { creerRendu } from '../lib/rendu.js';
-import { lireContenu, contenuInitial } from '../lib/contenu.js';
+import { lireContenu, contenuInitial, ETIQUETTE_PAGES } from '../lib/contenu.js';
 
 export default async function handler(req, res) {
   const url = new URL(req.url, 'http://site');
@@ -32,6 +33,7 @@ export default async function handler(req, res) {
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   res.setHeader('Vercel-CDN-Cache-Control', 'max-age=60, stale-while-revalidate=86400');
+  res.setHeader('Vercel-Cache-Tag', ETIQUETTE_PAGES);
   if (html === null) return res.status(404).send(rendu.page404());
   return res.status(200).send(html);
 }

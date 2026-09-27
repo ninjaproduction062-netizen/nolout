@@ -1,7 +1,7 @@
 {
   "_aide": [
     "Contenu du site NOLOUT SARLU (maquettes v2, thème sombre).",
-    "Après modification, lancez sources/generer.cmd : les pages HTML du dossier site/ sont régénérées.",
+    "Ce fichier est le contenu de départ, versé dans la base Neon au premier lancement, et le contenu de secours si la base est injoignable. En ligne, les textes se modifient dans l'administration (/admin/, onglet Contenus) : changer ce fichier ne modifie plus le site. Sur ce poste, sources/generer.cmd en tire les pages du dossier site/ pour un aperçu.",
     "Les textes entre [crochets] sont des données à fournir par le client : ils restent visibles tant qu'ils ne sont pas remplacés.",
     "Téléphones et WhatsApp : laissez \"\" tant que le numéro n'est pas connu. Le site affiche alors « +243 [numéro] » et le lien mène à la page Contact.",
     "whatsapp : chiffres uniquement, indicatif compris (ex. 243812345678). telephone : format affiché (ex. +243 81 234 5678).",

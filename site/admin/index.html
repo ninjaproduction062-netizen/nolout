@@ -38,7 +38,7 @@
   <div class="ad-porte__carte">
     <p class="ad-porte__marque"><img src="/assets/img/logo-nolout.webp" alt="" width="34" height="34"><span>NOLOUT</span></p>
     <h1 class="ad-porte__titre">Créer le premier compte</h1>
-    <p class="ad-porte__texte">Ce compte gérera le site et pourra ensuite ajouter les membres de l’équipe. Choisissez un mot de passe d’au moins 10 caractères : il est chiffré, personne ne peut le lire, pas même nous.</p>
+    <p class="ad-porte__texte">Ce compte gérera le site et pourra ensuite ajouter les membres de l’équipe. Choisissez un mot de passe d’au moins 10 caractères&nbsp;: il est chiffré, personne ne peut le lire, pas même nous.</p>
     <form class="ad-form" data-form="premier-compte" novalidate>
       <label class="nl-champ__label" for="pc-nom">Votre nom</label>
       <input class="nl-champ__input" id="pc-nom" name="nom" type="text" autocomplete="name" required>
@@ -115,10 +115,34 @@
       <ul class="ad-demandes" data-demandes></ul>
     </section>
 
-    <!-- Contenus du site (étape suivante) -->
+    <!-- Contenus du site : brouillon enregistré au fil de la saisie, aperçu, puis « Publier » -->
     <section class="ad-panneau" data-panneau="contenus" aria-labelledby="t-contenus" hidden>
-      <h1 class="ad-titre" id="t-contenus">Contenus du site</h1>
-      <p class="ad-intro">Bientôt ici : textes, témoignages, réalisations, pub vidéo, logos, chiffres clés et coordonnées, avec un bouton « Publier ».</p>
+      <div class="ad-panneau__tete">
+        <div>
+          <h1 class="ad-titre" id="t-contenus">Contenus du site</h1>
+          <p class="ad-intro">Vos modifications s’enregistrent au fur et à mesure dans un brouillon que les visiteurs ne voient pas. Vérifiez l’aperçu, puis cliquez sur «&nbsp;Publier&nbsp;» pour mettre le site à jour.</p>
+        </div>
+      </div>
+      <p class="ad-message" data-message-contenus role="alert"></p>
+      <div class="ad-ed" data-editeur hidden>
+        <nav class="ad-ed__nav" aria-label="Sections du site" data-sections></nav>
+        <label class="ad-ed__choix"><span class="nl-champ__label">Section à modifier</span><select class="nl-champ__input" data-choix-section></select></label>
+        <div class="ad-ed__form" data-formulaire-contenu></div>
+      </div>
+      <div class="ad-publication" data-publication hidden>
+        <p class="ad-etat" data-etat role="status" aria-live="polite"></p>
+        <div class="ad-publication__actions">
+          <button type="button" class="ad-lien-danger" data-annuler-brouillon hidden>Annuler les modifications</button>
+          <button type="button" class="nl-btn nl-btn--verre nl-btn--petit" data-recharger hidden>Recharger</button>
+          <a class="nl-btn nl-btn--verre nl-btn--petit" data-apercu href="/apercu/" target="_blank" rel="noopener">Voir l’aperçu</a>
+          <button type="button" class="nl-btn nl-btn--or nl-btn--petit" data-publier disabled>Publier</button>
+        </div>
+      </div>
+      <details class="ad-historique" data-historique-bloc hidden>
+        <summary>Historique des publications</summary>
+        <p class="ad-intro">À chaque publication, la version remplacée est gardée ici. Vous pouvez la remettre dans le brouillon, la vérifier dans l’aperçu, puis la publier à nouveau.</p>
+        <ul class="ad-historique__liste" data-historique></ul>
+      </details>
     </section>
 
     <!-- Équipe -->

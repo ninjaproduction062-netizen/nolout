@@ -1,7 +1,9 @@
 // API de l'administration (page /admin/). Une seule fonction, l'action est dans l'adresse :
 // /api/admin?action=session | premier-compte | demandes | comptes | mot-de-passe
+//                  | contenus | publier | annuler | historique | restaurer
 import { base, preparerBase } from '../lib/base.js';
 import { chiffrerMotDePasse, verifierMotDePasse, creerJeton, cookieSession, cookieFin, compteConnecte } from '../lib/auth.js';
+import { lireContenu, verifierContenu, viderCachePages } from '../lib/contenu.js';
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const STATUTS = ['nouvelle', 'en cours', 'traitée'];
@@ -16,6 +18,35 @@ const hoteProtege = (req) => {
 };
 
 const erreur = (res, code, message) => res.status(code).json({ ok: false, erreur: message });
+
+// Brouillon et version en ligne, avec de quoi savoir s'il reste des modifications à publier
+async function etatContenus(sql) {
+  await lireContenu('publie'); // installe le contenu initial au tout premier appel
+  await sql`INSERT INTO contenus (cle, valeur, modifie_par)
+            SELECT 'brouillon', valeur, 'installation' FROM contenus WHERE cle = 'publie'
+            ON CONFLICT (cle) DO NOTHING`;
+  const lignes = await sql`SELECT cle, valeur, valeur::text AS texte, version, modifie_le, modifie_par
+                           FROM contenus WHERE cle IN ('publie', 'brouillon')`;
+  const b = lignes.find((l) => l.cle === 'brouillon');
+  const p = lignes.find((l) => l.cle === 'publie');
+  return {
+    brouillon: b.valeur,
+    publie: p.valeur,
+    version: b.version,
+    aPublier: b.texte !== p.texte,
+    brouillonModifieLe: b.modifie_le,
+    brouillonModifiePar: b.modifie_par,
+    publieLe: p.modifie_le,
+    publiePar: p.modifie_par,
+  };
+}
+
+// Le brouillon a changé depuis que la personne l'a chargé (autre onglet, autre membre de l'équipe)
+async function conflit(res, sql) {
+  const [b] = await sql`SELECT modifie_par FROM contenus WHERE cle = 'brouillon'`;
+  const qui = b && b.modifie_par && b.modifie_par !== 'installation' ? b.modifie_par : 'une autre personne';
+  return erreur(res, 409, `Le brouillon vient d’être modifié par ${qui}. Rechargez les contenus pour repartir de cette version.`);
+}
 
 // Empreinte factice : une adresse inconnue coûte le même temps de calcul qu'une vraie,
 // pour ne pas révéler quelles adresses ont un compte
@@ -168,6 +199,76 @@ export default async function handler(req, res) {
       // Les autres sessions de ce compte prennent fin ; celle-ci continue avec le nouveau mot de passe
       res.setHeader('Set-Cookie', cookieSession(creerJeton(compte)));
       return res.status(200).json({ ok: true });
+    }
+
+    // ── Contenus du site : le brouillon s'enregistre au fil de la saisie ──
+    if (action === 'contenus') {
+      if (methode === 'GET') return res.status(200).json({ ok: true, ...(await etatContenus(sql)) });
+      if (methode === 'PUT') {
+        const problemes = verifierContenu(corps.valeur);
+        if (problemes.length) return erreur(res, 400, problemes.join(' '));
+        const json = JSON.stringify(corps.valeur);
+        const [ligne] = await sql`UPDATE contenus SET valeur = ${json}::json, version = version + 1, modifie_le = now(), modifie_par = ${moi.nom}
+                                  WHERE cle = 'brouillon' AND version = ${Number(corps.version) || 0}
+                                  RETURNING version`;
+        if (!ligne) return conflit(res, sql);
+        const [p] = await sql`SELECT valeur::text AS texte FROM contenus WHERE cle = 'publie'`;
+        return res.status(200).json({ ok: true, version: ligne.version, aPublier: !p || json !== p.texte });
+      }
+      return erreur(res, 405, 'Méthode non autorisée');
+    }
+
+    // ── Publier : le brouillon (vérifié) devient la version en ligne ──
+    if (action === 'publier') {
+      if (methode !== 'POST') return erreur(res, 405, 'Méthode non autorisée');
+      const version = Number(corps.version) || 0;
+      const [b] = await sql`SELECT valeur, valeur::text AS texte, version FROM contenus WHERE cle = 'brouillon'`;
+      if (!b || b.version !== version) return conflit(res, sql);
+      const [p] = await sql`SELECT valeur::text AS texte FROM contenus WHERE cle = 'publie'`;
+      if (p && p.texte === b.texte) return erreur(res, 400, 'Rien à publier : le site est déjà à jour.');
+      const problemes = verifierContenu(b.valeur);
+      if (problemes.length) return erreur(res, 400, problemes.join(' '));
+      // Une seule instruction : la version en ligne part dans l'historique et le brouillon la remplace,
+      // à condition que le brouillon soit toujours celui qui vient d'être vérifié
+      const [publie] = await sql`
+        WITH brouillon AS (SELECT valeur FROM contenus WHERE cle = 'brouillon' AND version = ${version}),
+             archive AS (INSERT INTO contenus_historique (valeur, publie_le, publie_par)
+                         SELECT valeur, modifie_le, modifie_par FROM contenus
+                         WHERE cle = 'publie' AND EXISTS (SELECT 1 FROM brouillon))
+        UPDATE contenus SET valeur = (SELECT valeur FROM brouillon), version = version + 1,
+                            modifie_le = now(), modifie_par = ${moi.nom}
+        WHERE cle = 'publie' AND EXISTS (SELECT 1 FROM brouillon)
+        RETURNING modifie_le`;
+      if (!publie) return conflit(res, sql);
+      const cacheVide = await viderCachePages();
+      return res.status(200).json({ ok: true, publieLe: publie.modifie_le, publiePar: moi.nom, cacheVide });
+    }
+
+    // ── Annuler les modifications non publiées : le brouillon repart de la version en ligne ──
+    if (action === 'annuler') {
+      if (methode !== 'POST') return erreur(res, 405, 'Méthode non autorisée');
+      const [ligne] = await sql`UPDATE contenus AS b SET valeur = p.valeur, version = b.version + 1, modifie_le = now(), modifie_par = ${moi.nom}
+                                FROM contenus AS p WHERE b.cle = 'brouillon' AND p.cle = 'publie'
+                                RETURNING b.version`;
+      return ligne ? res.status(200).json({ ok: true, version: ligne.version }) : erreur(res, 404, 'Brouillon introuvable.');
+    }
+
+    // ── Historique : versions du site remplacées par une publication ──
+    if (action === 'historique') {
+      if (methode !== 'GET') return erreur(res, 405, 'Méthode non autorisée');
+      const versions = await sql`SELECT id, publie_le, publie_par FROM contenus_historique ORDER BY id DESC LIMIT 30`;
+      return res.status(200).json({ ok: true, versions: versions.map((v) => ({ ...v, id: Number(v.id) })) });
+    }
+
+    // ── Restaurer : une ancienne version revient dans le brouillon (à vérifier puis publier) ──
+    if (action === 'restaurer') {
+      if (methode !== 'POST') return erreur(res, 405, 'Méthode non autorisée');
+      const id = Number(corps.id);
+      if (!Number.isInteger(id)) return erreur(res, 400, 'Version invalide.');
+      const [ligne] = await sql`UPDATE contenus AS b SET valeur = h.valeur, version = b.version + 1, modifie_le = now(), modifie_par = ${moi.nom}
+                                FROM contenus_historique AS h WHERE b.cle = 'brouillon' AND h.id = ${id}
+                                RETURNING b.version`;
+      return ligne ? res.status(200).json({ ok: true, version: ligne.version }) : erreur(res, 404, 'Version introuvable.');
     }
 
     return erreur(res, 404, 'Action inconnue.');

@@ -1,5 +1,6 @@
-// Aperçu local qui imite Vercel : fichiers de site/ d'abord, puis fonctions api/, puis pages
-// fabriquées par api/page.js. Sans DATABASE_URL, le contenu vient de sources/contenu.json.
+// Aperçu local qui imite Vercel (vercel.json) : fichiers de site/ d'abord, puis fonctions api/,
+// aperçu du brouillon (/apercu/…), puis pages fabriquées par api/page.js.
+// Sans DATABASE_URL, le contenu vient de sources/contenu.json.
 // Usage : node scripts/serveur-local.mjs [port, 3000 par défaut]
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
@@ -23,13 +24,17 @@ function enrichir(res) {
   return res;
 }
 
+// Pages index.html produites dans site/ par generer.mjs : absentes en ligne (voir .gitignore).
+// Comme sur Vercel, on les ignore et la page est fabriquée à partir du contenu.
+const pageGeneree = (fichier) => fichier.endsWith(`${sep}index.html`) && !fichier.startsWith(join(site, 'admin') + sep);
+
 async function fichierStatique(chemin) {
   let fichier = normalize(join(site, decodeURIComponent(chemin)));
   if (!fichier.startsWith(site + sep) && fichier !== site) return null;
   try {
     let s = await stat(fichier);
     if (s.isDirectory()) { fichier = join(fichier, 'index.html'); s = await stat(fichier); }
-    return s.isFile() ? fichier : null;
+    return s.isFile() && !pageGeneree(fichier) ? fichier : null;
   } catch { return null; }
 }
 
@@ -54,6 +59,11 @@ createServer(async (req, res) => {
     if (fonction) {
       try { await stat(join(racine, 'api', `${fonction[1]}.js`)); } catch { return res.status(404).send('404'); }
       return await appelerFonction(fonction[1], req, res);
+    }
+    const apercu = url.pathname.match(/^\/apercu(\/.*)?$/);
+    if (apercu) {
+      req.url = `/api/apercu?chemin=${encodeURIComponent(apercu[1] || '')}`;
+      return await appelerFonction('apercu', req, res);
     }
     req.url = `/api/page?chemin=${encodeURIComponent(url.pathname)}`;
     return await appelerFonction('page', req, res);
