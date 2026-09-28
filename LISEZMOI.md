@@ -72,7 +72,9 @@ On peut mettre autant de logos qu'on veut : la bande se complète toute seule po
 
 Les cartes « Réalisations » (accueil) et « Références » (pages département) sont au format 16:10. Une photo verticale y serait coupée au milieu, visage compris : on la recadre donc d'abord en 1200 × 750, cadrée sur le sujet, et on garde l'original dans `sources/photos/`. Les photos s'enverront depuis l'administration à l'étape suivante. Dans le contenu, une photo s'indique soit dans `accueil.realisations` (`image` et `alt`), soit dans la `galerie` du département (`fichier`, `alt`, `titre` et `meta`).
 
-Photos en place, pour Nolout Communication : un portrait en studio (carte de l'accueil et première référence) et une intervenante au micro lors d'un événement, en noir et blanc (deuxième référence).
+Photos en place :
+- Nolout Communication : un portrait en studio (carte de l'accueil et première référence) et une intervenante au micro lors d'un événement, en noir et blanc (deuxième référence).
+- Nolout Construction : cinq vues de drone d'un chantier de nuit (vue d'ensemble, coulage d'une dalle, béton entre les poteaux, dalle et fondations, chantier de nuit), tirées du dossier `G:\NUIT CHANTIER`. Elles sont réduites à 1600 × 1200 et débarrassées de leurs métadonnées (données du drone). Les originaux sont dans `sources/photos/`.
 
 ## Publicité vidéo (accueil)
 
@@ -98,6 +100,8 @@ Le formulaire envoie en JSON `departement`, `equipe`, `destinataire`, `nom`, `en
 ## Cookies
 
 Au premier passage, un bandeau propose « Tout refuser », « Tout accepter » ou « Personnaliser mes choix », avec une case par catégorie : mesure d'audience et marketing. Les cookies nécessaires sont toujours actifs. Le choix est gardé six mois dans le navigateur. Ensuite, un bouton rond en bas à gauche (repris de n8n.io, il s'élargit au survol) et le lien « Cookies » du pied de page rouvrent les réglages. Si le visiteur retire un accord, les cookies de mesure déjà déposés sont effacés.
+
+**Carte Google Maps (page Contact).** Le cadre « Siège NOLOUT » montre le lieu indiqué dans l'administration (« Contenus », « Coordonnées et mentions », champ « Lieu sur la carte Google Maps » ; aujourd'hui « Gombe, Kinshasa »). Google dépose ses propres cookies : la carte ne se charge que si le visiteur accepte la catégorie « Contenus externes » (ou « Tout accepter »), ou s'il clique sur « Afficher la carte ». Avant cela, une carte dessinée aux couleurs du site affiche l'épingle et le lieu. Une fois l'adresse exacte du siège connue, indiquez-la dans ce champ : la carte et le lien « Ouvrir l'itinéraire » la suivront.
 
 Aucun outil de mesure n'est installé pour l'instant. Pour en ajouter, renseignez leur identifiant dans l'administration : « Contenus », section « Mesure d'audience » (rubrique `cookies` du contenu).
 

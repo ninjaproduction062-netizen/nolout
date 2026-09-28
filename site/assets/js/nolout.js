@@ -475,6 +475,33 @@
     });
   }
 
+  /* ── Carte Google Maps du siège (page Contact) ──
+   * Google dépose ses propres cookies : la carte ne se charge qu'avec l'accord « Contenus externes »
+   * (bandeau des cookies), ou quand le visiteur clique sur « Afficher la carte », pour cette fois.
+   * Ce module est placé avant celui des cookies, qui annonce le choix déjà enregistré. */
+  const plans = $$('[data-plan]');
+  if (plans.length) {
+    const charger = (plan) => {
+      if (plan.classList.contains('is-charge')) return;
+      const bouton = $('[data-plan-afficher]', plan);
+      const carte = document.createElement('iframe');
+      carte.className = 'nl-plan__carte';
+      carte.src = bouton.dataset.planSrc;
+      carte.title = bouton.dataset.planTitre || 'Carte Google Maps';
+      carte.referrerPolicy = 'no-referrer-when-downgrade';
+      carte.allowFullscreen = true;
+      plan.append(carte);
+      plan.classList.add('is-charge');
+    };
+    plans.forEach((plan) => $('[data-plan-afficher]', plan).addEventListener('click', (e) => {
+      e.preventDefault();
+      charger(plan);
+    }));
+    const selonAccord = (choix) => { if (choix && choix.externe) plans.forEach(charger); };
+    document.addEventListener('nl:consentement', (e) => selonAccord(e.detail));
+    selonAccord(window.nlConsentement);
+  }
+
   /* ── Cookies : consentement (bandeau, réglages, bouton flottant) ──
    * Le choix est gardé 6 mois dans le navigateur. Les scripts marqués
    * <script type="text/plain" data-consentement="mesure|marketing"> ne sont

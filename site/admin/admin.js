@@ -384,7 +384,7 @@
       {
         id: 'coordonnees', rubrique: 'Groupe', titre: 'Coordonnées et mentions', apercu: '/apercu/contact/',
         racine: (X) => X.groupe,
-        cles: ['telephone', 'whatsapp', 'email', 'adresse', 'adresseCourte', 'horaires', 'itineraire', 'signature', 'raisonSociale', 'rccm', 'idNat', 'numeroImpot', 'annee'],
+        cles: ['telephone', 'whatsapp', 'email', 'adresse', 'adresseCourte', 'carte', 'horaires', 'itineraire', 'signature', 'raisonSociale', 'rccm', 'idNat', 'numeroImpot', 'annee'],
         champs: [
           { type: 'intertitre', libelle: 'Contact' },
           { cle: 'telephone', libelle: 'Téléphone affiché', exemple: '+243 81 234 5678' },
@@ -392,6 +392,7 @@
           { cle: 'email', libelle: 'Adresse e-mail', format: 'email' },
           { cle: 'adresse', libelle: 'Adresse complète', aide: 'Page Contact.' },
           { cle: 'adresseCourte', libelle: 'Adresse courte', aide: 'Pied de page.' },
+          { cle: 'carte', libelle: 'Lieu sur la carte Google Maps', exemple: 'Gombe, Kinshasa', aide: 'Commune ou adresse complète du siège : la carte de la page Contact montre ce lieu. Vide : pas de carte.' },
           { cle: 'horaires', type: 'liste', libelle: 'Horaires d’ouverture', element: 'Horaire', ajouter: 'Ajouter une ligne', max: 7,
             nouveau: () => ({ jours: '', heures: '' }),
             champs: [{ cle: 'jours', libelle: 'Jours', exemple: 'Lun – ven' }, { cle: 'heures', libelle: 'Heures', exemple: '8 h 30 – 17 h 30' }] },

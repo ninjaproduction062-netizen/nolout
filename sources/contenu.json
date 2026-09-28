@@ -5,6 +5,7 @@
     "Les textes entre [crochets] sont des données à fournir par le client : ils restent visibles tant qu'ils ne sont pas remplacés.",
     "Téléphones et WhatsApp : laissez \"\" tant que le numéro n'est pas connu. Le site affiche alors « +243 [numéro] » et le lien mène à la page Contact.",
     "whatsapp : chiffres uniquement, indicatif compris (ex. 243812345678). telephone : format affiché (ex. +243 81 234 5678).",
+    "groupe.carte : lieu montré par la carte Google Maps de la page Contact (commune ou adresse complète, ex. Gombe, Kinshasa). Vide : emplacement « Carte du siège à venir ». La carte ne se charge qu'avec l'accord « Contenus externes » du visiteur, ou quand il clique sur « Afficher la carte ».",
     "orbite : place de départ du département sur le schéma de l'accueil, où les six départements tournent autour de NOLOUT. Angle en degrés : 0 = à droite, 90 = en bas, 180 = à gauche, -90 = en haut. Gardez 60° d'écart entre deux départements.",
     "Bandeau de logos de l'accueil (accueil.partenaires) : une entrée par logo, avec le nom de la marque ou du client et le fichier (ex. logos/nom.png dans site/assets/img/), recadré au ras du logo. Chaque logo s'affiche dans ses couleurs sur une carte claire. fond : autre couleur de carte, par exemple pour un logo clair. ajustement cover : l'image remplit la carte (photo). Sans fichier, la carte affiche [logo]. rangees : 1 ou 2 bandes qui défilent.",
     "Publicité de l'accueil (accueil.pub) : vidéo lue en boucle, sans le son, quand elle est à l'écran. fichier : vidéo MP4 déposée dans site/assets/video/ (ou adresse https complète). affiche : image JPG du même dossier, montrée avant la lecture. Avec plusieurs vidéos, elles s'enchaînent puis la liste recommence. Sans vidéo, l'emplacement affiche « Vidéo publicitaire à venir ». lien : lien facultatif sous le texte (libelle et href, ex. contact/#formulaire).",
@@ -23,14 +24,15 @@
     "telephone": "",
     "whatsapp": "",
     "email": "contact@nolout.cd",
-    "adresse": "[Adresse], [Commune], Kinshasa, RDC",
-    "adresseCourte": "[Adresse], Kinshasa",
+    "adresse": "[Adresse], Gombe, Kinshasa, RDC",
+    "adresseCourte": "[Adresse], Gombe, Kinshasa",
     "horaires": [
       { "jours": "Lun – ven", "heures": "8 h 30 – 17 h 30" },
       { "jours": "Samedi", "heures": "9 h – 13 h" }
     ],
     "itineraire": "",
-    "formulaireEndpoint": "/api/contact"
+    "formulaireEndpoint": "/api/contact",
+    "carte": "Gombe, Kinshasa"
   },
 
   "cookies": {
@@ -112,7 +114,13 @@
       "references": { "etiquette": "Ouvrage", "meta": "[Lieu] · [année]", "titre": "[Nom de l’ouvrage]" },
       "image": { "fichier": "departements/nolout-construction.webp", "alt": "Logo Nolout Construction", "ajustement": "contain", "fond": "linear-gradient(180deg, #161511, #060503)" },
       "exempleMessage": "Type d’ouvrage, lieu, surface approximative et délai souhaité.",
-      "galerie": []
+      "galerie": [
+        { "fichier": "realisations/nolout-construction-vue-ensemble.jpg", "alt": "Vue aérienne de nuit d’un grand chantier en sous-sol : dalles coulées, zone bâchée en bleu et fondations, éclairés par un projecteur", "titre": "Vue d’ensemble du chantier", "meta": "" },
+        { "fichier": "realisations/nolout-construction-coulage-dalle.jpg", "alt": "Vue du ciel, de nuit : une équipe en gilets orange étale le béton frais d’une dalle", "titre": "Coulage d’une dalle", "meta": "" },
+        { "fichier": "realisations/nolout-construction-beton-poteaux.jpg", "alt": "Ouvriers coulant le béton au pied des poteaux, vus du ciel pendant un chantier de nuit", "titre": "Béton coulé entre les poteaux", "meta": "" },
+        { "fichier": "realisations/nolout-construction-dalle-fondations.jpg", "alt": "Vue aérienne de nuit : dalle en cours de coulage, massifs de fondation et zone protégée par une bâche bleue", "titre": "Dalle et fondations", "meta": "" },
+        { "fichier": "realisations/nolout-construction-chantier-nuit.jpg", "alt": "Vue aérienne de nuit du chantier, avec la pompe à béton et les zones de fondation en préparation", "titre": "Le chantier de nuit", "meta": "" }
+      ]
     },
     {
       "code": "baz",
