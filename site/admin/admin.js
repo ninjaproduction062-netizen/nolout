@@ -235,6 +235,8 @@
     ['truck', 'Camion'], ['phone', 'Téléphone'], ['mail', 'Enveloppe']];
   const cloner = (valeur) => JSON.parse(JSON.stringify(valeur));
   const provisoire = (valeur) => typeof valeur === 'string' && /\[[^\]]+\]/.test(valeur);
+  // Image du site (site/assets/img/…) ou adresse complète
+  const cheminImage = (fichier) => (/^https?:\/\//.test(fichier) ? fichier : `/assets/img/${fichier}`);
 
   // Sections du formulaire. racine(C) : l'objet modifié dans le contenu C ; cles : ce qui est comparé
   // à la version en ligne pour signaler une section modifiée (tout l'objet si absent).
@@ -351,7 +353,18 @@
               { cle: 'titre', libelle: 'Titre' },
               { cle: 'texte', type: 'zone', libelle: 'Description', lignes: 2 },
             ] },
+          { type: 'intertitre', libelle: 'Galerie photos (page Réalisations)' },
+          { cle: 'galerie', type: 'liste', libelle: 'Photos', element: 'Photo', sansAjout: true,
+            aide: 'Les trois premières photos illustrent aussi les références de la page du département. L’ajout de nouvelles photos arrivera avec l’envoi de fichiers.',
+            vide: 'Aucune photo pour l’instant : la page Réalisations affiche « Les photos arrivent bientôt ».',
+            vignette: (p) => (p && p.fichier ? cheminImage(p.fichier) : ''),
+            champs: [
+              { cle: 'titre', libelle: 'Titre', exemple: 'Portrait en studio' },
+              { cle: 'meta', libelle: 'Précision', exemple: 'Client · 2025' },
+              { cle: 'alt', type: 'zone', libelle: 'Description de la photo', lignes: 2, aide: 'Lue aux personnes malvoyantes et utilisée par Google.' },
+            ] },
           { type: 'intertitre', libelle: 'Références' },
+          { type: 'note', texte: 'Textes affichés sous les photos de la section « Références » qui n’ont pas de titre, et sous les emplacements « Photo à venir ».' },
           { cle: 'references', type: 'groupe', champs: [
             { cle: 'etiquette', libelle: 'Type de référence', exemple: 'Mission, chantier, campagne…' },
             { cle: 'titre', libelle: 'Titre' },
@@ -390,6 +403,20 @@
           { cle: 'idNat', libelle: 'Identification nationale' },
           { cle: 'numeroImpot', libelle: 'Numéro d’impôt' },
           { cle: 'annee', libelle: 'Année du pied de page', exemple: '2026' },
+        ],
+      },
+      {
+        id: 'page-realisations', rubrique: 'Groupe', titre: 'Page Réalisations', apercu: '/apercu/realisations/',
+        intro: 'Le haut de la page des galeries photos. Les photos se gèrent dans chaque département.',
+        racine: (X) => X.realisations, creer: (X) => (X.realisations = {}),
+        cles: ['pastille', 'titre', 'intro', 'titrePage', 'description'],
+        champs: [
+          { cle: 'pastille', libelle: 'Pastille au-dessus du titre' },
+          { cle: 'titre', libelle: 'Titre de la page' },
+          { cle: 'intro', type: 'zone', libelle: 'Texte d’introduction' },
+          { type: 'intertitre', libelle: 'Google et onglet du navigateur' },
+          { cle: 'titrePage', libelle: 'Titre dans l’onglet et sur Google' },
+          { cle: 'description', type: 'zone', libelle: 'Description sur Google' },
         ],
       },
       {
@@ -534,10 +561,12 @@
     return bouton;
   }
 
-  // Liste d'éléments (témoignages, services…) ou de textes (type « textes ») : ajouter, déplacer, retirer
+  // Liste d'éléments (témoignages, services…) ou de textes (type « textes ») : ajouter, déplacer, retirer.
+  // fixe : ni ajout ni déplacement ; sansAjout : déplacer et retirer seulement ; vignette(item) : aperçu de la photo
   function champListe(def, obtenir) {
     const bloc = element('fieldset', 'ad-ed__liste');
     bloc.append(element('legend', 'ad-ed__legende', def.libelle));
+    if (def.aide) bloc.append(element('p', 'ad-ed__aide', def.aide));
     const elements = element('div', 'ad-ed__elements');
     bloc.append(elements);
     const tableau = (creer) => {
@@ -551,9 +580,18 @@
     const dessiner = (focaliserDernier) => {
       elements.replaceChildren();
       const t = tableau(false) || [];
+      if (!t.length && def.vide) elements.append(element('p', 'ad-ed__note', def.vide));
       t.forEach((item, i) => {
         const carte = element('div', 'ad-ed__element');
         const tete = element('div', 'ad-ed__element-tete');
+        const source = def.vignette ? def.vignette(item) : '';
+        if (source) {
+          const apercu = element('img', 'ad-ed__vignette');
+          apercu.src = source;
+          apercu.alt = '';
+          apercu.loading = 'lazy';
+          tete.append(apercu);
+        }
         tete.append(element('span', 'ad-ed__element-titre', def.titreElement ? def.titreElement(item, i) : nom(i)));
         if (!def.fixe) {
           const outils = element('div', 'ad-ed__outils');
@@ -577,7 +615,7 @@
         }
         elements.append(carte);
       });
-      if (!def.fixe) {
+      if (!def.fixe && !def.sansAjout) {
         const ajouter = element('button', 'nl-btn nl-btn--verre nl-btn--petit ad-ed__ajouter', `+ ${def.ajouter || 'Ajouter'}`);
         ajouter.type = 'button';
         ajouter.disabled = Boolean(def.max && t.length >= def.max);

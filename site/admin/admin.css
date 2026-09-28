@@ -177,7 +177,8 @@
   background: rgba(6, 17, 32, .55);
 }
 .ad-ed__element-tete { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.ad-ed__element-titre { font: 600 12px/16px var(--nl-titre); letter-spacing: .06em; text-transform: uppercase; color: var(--nl-silver-300); }
+.ad-ed__element-titre { flex: 1; font: 600 12px/16px var(--nl-titre); letter-spacing: .06em; text-transform: uppercase; color: var(--nl-silver-300); }
+.ad-ed__vignette { flex: none; width: 72px; height: 54px; object-fit: cover; border: 1px solid var(--nl-bord-14); border-radius: 8px; background: var(--nl-navy-950); }
 .ad-ed__outils { display: flex; gap: 4px; }
 .ad-ed__outil {
   min-width: 34px; height: 34px; padding: 0 10px;

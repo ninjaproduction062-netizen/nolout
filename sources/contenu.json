@@ -8,7 +8,7 @@
     "orbite : place de départ du département sur le schéma de l'accueil, où les six départements tournent autour de NOLOUT. Angle en degrés : 0 = à droite, 90 = en bas, 180 = à gauche, -90 = en haut. Gardez 60° d'écart entre deux départements.",
     "Bandeau de logos de l'accueil (accueil.partenaires) : une entrée par logo, avec le nom de la marque ou du client et le fichier (ex. logos/nom.png dans site/assets/img/), recadré au ras du logo. Chaque logo s'affiche dans ses couleurs sur une carte claire. fond : autre couleur de carte, par exemple pour un logo clair. ajustement cover : l'image remplit la carte (photo). Sans fichier, la carte affiche [logo]. rangees : 1 ou 2 bandes qui défilent.",
     "Publicité de l'accueil (accueil.pub) : vidéo lue en boucle, sans le son, quand elle est à l'écran. fichier : vidéo MP4 déposée dans site/assets/video/ (ou adresse https complète). affiche : image JPG du même dossier, montrée avant la lecture. Avec plusieurs vidéos, elles s'enchaînent puis la liste recommence. Sans vidéo, l'emplacement affiche « Vidéo publicitaire à venir ». lien : lien facultatif sous le texte (libelle et href, ex. contact/#formulaire).",
-    "Photos de réalisations : accueil.realisations (image et alt) et, dans chaque département, references.photos (jusqu'à trois, avec fichier et alt). Chemins dans site/assets/img/ (ex. realisations/nom.jpg), images recadrées au format 16:10 (1200 x 750). Originaux dans sources/photos/.",
+    "Photos de réalisations : chaque département a sa galerie (galerie), affichée sur la page Réalisations. Une entrée par photo : fichier (chemin dans site/assets/img/, ex. realisations/nom.jpg, ou adresse https complète), alt (description de la photo pour les malvoyants), titre et meta (ex. Client · 2025), facultatifs. Les trois premières photos illustrent aussi les références de la page du département. Photos de 1600 px de large au plus ; originaux dans sources/photos/. Les cartes de l'accueil (accueil.realisations) ont leur propre image et alt.",
     "image des départements : chemin dans site/assets/img/. Vide = emplacement « photo à venir ». ajustement : cover (photo recadrée au format 4:3), contain (image entière) ou logo (image entière avec marge). fond : couleur ou dégradé CSS derrière l'image."
   ],
 
@@ -78,7 +78,8 @@
       ],
       "references": { "etiquette": "Mission", "meta": "[Client] · [année]", "titre": "[Titre de la mission]" },
       "image": { "fichier": "departements/hekima-consulting.png", "alt": "Logo Hekima Consulting", "ajustement": "logo", "fond": "#0A1B33" },
-      "exempleMessage": "Décrivez votre organisation et l’objectif de la mission."
+      "exempleMessage": "Décrivez votre organisation et l’objectif de la mission.",
+      "galerie": []
     },
     {
       "code": "con",
@@ -110,7 +111,8 @@
       ],
       "references": { "etiquette": "Ouvrage", "meta": "[Lieu] · [année]", "titre": "[Nom de l’ouvrage]" },
       "image": { "fichier": "departements/nolout-construction.webp", "alt": "Logo Nolout Construction", "ajustement": "contain", "fond": "linear-gradient(180deg, #161511, #060503)" },
-      "exempleMessage": "Type d’ouvrage, lieu, surface approximative et délai souhaité."
+      "exempleMessage": "Type d’ouvrage, lieu, surface approximative et délai souhaité.",
+      "galerie": []
     },
     {
       "code": "baz",
@@ -142,7 +144,8 @@
       ],
       "references": { "etiquette": "Sélection", "meta": "[Collection] · [saison]", "titre": "[Nom de la sélection]" },
       "image": { "fichier": "", "alt": "", "ajustement": "cover", "fond": "" },
-      "exempleMessage": "Article recherché, quantité, livraison ou retrait."
+      "exempleMessage": "Article recherché, quantité, livraison ou retrait.",
+      "galerie": []
     },
     {
       "code": "com",
@@ -172,15 +175,13 @@
         { "icone": "users", "titre": "Réseaux sociaux", "texte": "Animation, contenus et communauté." },
         { "icone": "check", "titre": "Production média", "texte": "Vidéo, photo et audio." }
       ],
-      "references": {
-        "etiquette": "Campagne", "meta": "[Client] · [année]", "titre": "[Campagne]",
-        "photos": [
-          { "fichier": "realisations/nolout-communication-portrait.jpg", "alt": "Portrait en studio réalisé par Nolout Communication" },
-          { "fichier": "realisations/nolout-communication-evenement.jpg", "alt": "Intervenante au micro lors d’un événement photographié par Nolout Communication, en noir et blanc" }
-        ]
-      },
+      "references": { "etiquette": "Campagne", "meta": "[Client] · [année]", "titre": "[Campagne]" },
       "image": { "fichier": "", "alt": "", "ajustement": "cover", "fond": "" },
-      "exempleMessage": "Votre marque, l’objectif de la campagne et l’échéance."
+      "exempleMessage": "Votre marque, l’objectif de la campagne et l’échéance.",
+      "galerie": [
+        { "fichier": "realisations/nolout-communication-portrait.jpg", "alt": "Portrait en studio réalisé par Nolout Communication", "titre": "Portrait en studio", "meta": "" },
+        { "fichier": "realisations/nolout-communication-evenement.jpg", "alt": "Intervenante au micro lors d’un événement photographié par Nolout Communication, en noir et blanc", "titre": "Couverture d’événement", "meta": "" }
+      ]
     },
     {
       "code": "game",
@@ -212,7 +213,8 @@
       ],
       "references": { "etiquette": "Projet", "meta": "[Partenaire] · [année]", "titre": "[Nom du projet]" },
       "image": { "fichier": "departements/nolout-game.webp", "alt": "Visuel Nolout Game", "ajustement": "cover", "fond": "#12060A" },
-      "exempleMessage": "Projet de jeu, événement ou partenariat envisagé."
+      "exempleMessage": "Projet de jeu, événement ou partenariat envisagé.",
+      "galerie": []
     },
     {
       "code": "tra",
@@ -244,7 +246,8 @@
       ],
       "references": { "etiquette": "Opération", "meta": "[Client] · [année]", "titre": "[Nom de l’opération]" },
       "image": { "fichier": "departements/nolout-transport.webp", "alt": "Logo Nolout Transport", "ajustement": "logo", "fond": "#F4F6F8" },
-      "exempleMessage": "Marchandise, trajet, volume et date."
+      "exempleMessage": "Marchandise, trajet, volume et date.",
+      "galerie": []
     }
   ],
 
@@ -300,9 +303,16 @@
     ]
   },
 
+  "realisations": {
+    "titrePage": "Réalisations — NOLOUT SARLU",
+    "description": "Les réalisations des six départements de NOLOUT SARLU en images : conseil, construction, commerce, communication, gaming et transport.",
+    "pastille": "Six départements, des projets concrets",
+    "titre": "Nos réalisations",
+    "intro": "Chantiers, campagnes, événements et missions : découvrez en images le travail de nos six départements. Choisissez un département pour ne voir que sa galerie."
+  },
+
   "pagesEnPreparation": [
     { "page": "groupe", "titre": "Le groupe", "texte": "Histoire, vision, valeurs, mot du fondateur et gouvernance de NOLOUT SARLU." },
-    { "page": "realisations", "titre": "Réalisations", "texte": "Les projets menés par nos six départements, filtrables par département." },
     { "page": "actualites", "titre": "Actualités", "texte": "Les nouvelles du groupe et de ses départements." },
     { "page": "carrieres", "titre": "Carrières", "texte": "Nos offres d’emploi et la candidature spontanée." },
     { "page": "investisseurs", "titre": "Investisseurs", "texte": "Le profil du groupe et les documents à télécharger." },

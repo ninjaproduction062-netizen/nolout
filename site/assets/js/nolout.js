@@ -1,5 +1,6 @@
 /* NOLOUT SARLU — interactions du site (sans dépendance).
- * Mégamenu, menu mobile, schéma des départements, compteurs, publicité vidéo, formulaire de contact. */
+ * Mégamenu, menu mobile, schéma des départements, compteurs, publicité vidéo, galeries de réalisations,
+ * formulaire de contact. */
 (() => {
   'use strict';
 
@@ -321,6 +322,104 @@
       actualiser();
     }
     majEtat();
+  }
+
+  /* ── Réalisations : filtre par département ──
+   * Sans JavaScript, les filtres sont de simples ancres vers chaque galerie.
+   * Adresse « realisations/#nolout-communication » : seule cette galerie est affichée. */
+  const filtresGalerie = $('[data-filtres-galerie]');
+  const galeries = $$('[data-galerie]');
+  if (filtresGalerie && galeries.length) {
+    const filtres = $$('[data-filtre-galerie]', filtresGalerie);
+    const filtrer = (slug) => {
+      const choix = galeries.some((g) => g.dataset.galerie === slug) ? slug : '';
+      galeries.forEach((g) => { g.hidden = Boolean(choix) && g.dataset.galerie !== choix; });
+      filtres.forEach((f) => {
+        if (f.dataset.filtreGalerie === choix) f.setAttribute('aria-current', 'true');
+        else f.removeAttribute('aria-current');
+      });
+      return choix;
+    };
+    filtres.forEach((f) => f.addEventListener('click', (e) => {
+      e.preventDefault();
+      const choix = filtrer(f.dataset.filtreGalerie);
+      history.replaceState(null, '', choix ? `#${choix}` : location.pathname + location.search);
+    }));
+    // Arrivée depuis une page département : on montre sa galerie, juste sous les filtres
+    if (filtrer(decodeURIComponent(location.hash.slice(1)))) {
+      requestAnimationFrame(() => $('#toutes').scrollIntoView({ block: 'start' }));
+    }
+  }
+
+  /* ── Réalisations : visionneuse de photos ──
+   * Clic sur une photo : elle s'ouvre en grand. Flèches ← →, glisser le doigt ou boutons
+   * pour passer d'une photo à l'autre dans la galerie du département ; Échap ou clic à côté pour fermer.
+   * Sans JavaScript, le lien ouvre simplement la photo. */
+  const visionneuse = $('[data-visionneuse]');
+  if (visionneuse && typeof visionneuse.showModal === 'function') {
+    const image = $('[data-visionneuse-image]', visionneuse);
+    const legende = $('[data-visionneuse-legende]', visionneuse);
+    const compteur = $('[data-visionneuse-compteur]', visionneuse);
+    const navigation = $$('.nl-visionneuse__nav', visionneuse);
+    let serie = [];
+    let position = 0;
+    let declencheur = null;
+
+    const afficher = (i) => {
+      position = (i + serie.length) % serie.length;
+      const lien = serie[position];
+      const vignette = $('img', lien);
+      image.src = lien.href;
+      image.alt = vignette ? vignette.alt : '';
+      const textes = [lien.dataset.titre, lien.dataset.meta].filter(Boolean);
+      legende.textContent = textes.join(' · ');
+      legende.hidden = !textes.length;
+      compteur.textContent = `${position + 1} / ${serie.length}`;
+      navigation.forEach((b) => { b.hidden = serie.length < 2; });
+      // La photo suivante se charge pendant qu'on regarde celle-ci
+      if (serie.length > 1) new Image().src = serie[(position + 1) % serie.length].href;
+    };
+    const ouvrir = (lien) => {
+      serie = $$('[data-galerie-photo]', lien.closest('[data-galerie]') || document);
+      declencheur = lien;
+      afficher(serie.indexOf(lien));
+      document.documentElement.classList.add('nl-sans-defilement');
+      visionneuse.showModal();
+    };
+
+    $$('[data-galerie-photo]').forEach((lien) => lien.addEventListener('click', (e) => {
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;   // ouvrir dans un nouvel onglet reste possible
+      e.preventDefault();
+      ouvrir(lien);
+    }));
+    visionneuse.addEventListener('close', () => {
+      document.documentElement.classList.remove('nl-sans-defilement');
+      image.removeAttribute('src');
+      if (declencheur) declencheur.focus();
+    });
+    $('[data-visionneuse-fermer]', visionneuse).addEventListener('click', () => visionneuse.close());
+    $('[data-visionneuse-prec]', visionneuse).addEventListener('click', () => afficher(position - 1));
+    $('[data-visionneuse-suiv]', visionneuse).addEventListener('click', () => afficher(position + 1));
+    visionneuse.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); afficher(position - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); afficher(position + 1); }
+    });
+
+    // Glisser le doigt vers la gauche ou la droite ; un simple clic à côté de la photo ferme
+    let departX = null;
+    let glisse = false;
+    visionneuse.addEventListener('pointerdown', (e) => { departX = e.clientX; glisse = false; });
+    visionneuse.addEventListener('pointerup', (e) => {
+      if (departX === null) return;
+      const ecart = e.clientX - departX;
+      departX = null;
+      if (Math.abs(ecart) > 10) glisse = true;
+      if (Math.abs(ecart) > 50 && serie.length > 1) afficher(position + (ecart < 0 ? 1 : -1));
+    });
+    visionneuse.addEventListener('click', (e) => {
+      if (glisse) { glisse = false; return; }
+      if (e.target === visionneuse || e.target.hasAttribute('data-visionneuse-figure')) visionneuse.close();
+    });
   }
 
   /* ── Cookies : consentement (bandeau, réglages, bouton flottant) ──

@@ -51,7 +51,8 @@ Adresse : https://nolout-beta.vercel.app/admin/
 | `/departements/` | Les six départements |
 | `/departements/hekima-consulting/` … `/departements/nolout-transport/` | Pages département (un seul gabarit) |
 | `/contact/` | Formulaire en 3 étapes, routé par département |
-| `/groupe/`, `/realisations/`, `/actualites/`, `/carrieres/`, `/investisseurs/`, `/mentions-legales/`, `/confidentialite/` | Pages « en préparation » (pas encore dessinées) |
+| `/realisations/` | Galeries photos, une par département, avec filtres et visionneuse |
+| `/groupe/`, `/actualites/`, `/carrieres/`, `/investisseurs/`, `/mentions-legales/`, `/confidentialite/` | Pages « en préparation » (pas encore dessinées) |
 
 ## Données à fournir par le client
 
@@ -67,7 +68,9 @@ On peut mettre autant de logos qu'on veut : la bande se complète toute seule po
 
 ## Photos de réalisations
 
-Les cartes « Réalisations » (accueil) et « Références » (pages département) sont au format 16:10. Une photo verticale y serait coupée au milieu, visage compris : on la recadre donc d'abord en 1200 × 750, cadrée sur le sujet, et on garde l'original dans `sources/photos/`. Les photos s'enverront depuis l'administration à l'étape suivante. Dans le contenu, une photo s'indique soit dans `accueil.realisations` (`image` et `alt`), soit dans `references.photos` du département (jusqu'à trois, avec `fichier` et `alt`).
+**Page Réalisations (`/realisations/`).** Chaque département y a sa galerie : ses photos en vignettes 4:3, avec titre et précision facultatifs (ex. « Client · 2025 »). Un département sans photo affiche « Les photos arrivent bientôt » et un lien vers son équipe. En haut, les filtres n'affichent qu'une galerie à la fois ; l'adresse `realisations/#nolout-communication` ouvre directement celle du département, et les pages département comme les cartes de l'accueil y mènent. Un clic sur une photo l'ouvre en grand : flèches du clavier, boutons ou glissement du doigt pour passer à la suivante, Échap ou clic à côté pour fermer. Les photos se rangent dans `galerie` de chaque département. Dans l'administration (« Contenus », section du département), on modifie leurs titres et descriptions, on les réordonne ou on les retire. L'ajout de photos arrive avec l'envoi de fichiers. Les trois premières photos de la galerie illustrent aussi les « Références » de la page du département.
+
+Les cartes « Réalisations » (accueil) et « Références » (pages département) sont au format 16:10. Une photo verticale y serait coupée au milieu, visage compris : on la recadre donc d'abord en 1200 × 750, cadrée sur le sujet, et on garde l'original dans `sources/photos/`. Les photos s'enverront depuis l'administration à l'étape suivante. Dans le contenu, une photo s'indique soit dans `accueil.realisations` (`image` et `alt`), soit dans la `galerie` du département (`fichier`, `alt`, `titre` et `meta`).
 
 Photos en place, pour Nolout Communication : un portrait en studio (carte de l'accueil et première référence) et une intervenante au micro lors d'un événement, en noir et blanc (deuxième référence).
 
