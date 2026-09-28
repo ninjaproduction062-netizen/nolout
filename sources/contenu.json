@@ -115,11 +115,11 @@
       "image": { "fichier": "departements/nolout-construction.webp", "alt": "Logo Nolout Construction", "ajustement": "contain", "fond": "linear-gradient(180deg, #161511, #060503)" },
       "exempleMessage": "Type d’ouvrage, lieu, surface approximative et délai souhaité.",
       "galerie": [
-        { "fichier": "realisations/nolout-construction-vue-ensemble.jpg", "alt": "Vue aérienne de nuit d’un grand chantier en sous-sol : dalles coulées, zone bâchée en bleu et fondations, éclairés par un projecteur", "titre": "Vue d’ensemble du chantier", "meta": "" },
-        { "fichier": "realisations/nolout-construction-coulage-dalle.jpg", "alt": "Vue du ciel, de nuit : une équipe en gilets orange étale le béton frais d’une dalle", "titre": "Coulage d’une dalle", "meta": "" },
-        { "fichier": "realisations/nolout-construction-beton-poteaux.jpg", "alt": "Ouvriers coulant le béton au pied des poteaux, vus du ciel pendant un chantier de nuit", "titre": "Béton coulé entre les poteaux", "meta": "" },
-        { "fichier": "realisations/nolout-construction-dalle-fondations.jpg", "alt": "Vue aérienne de nuit : dalle en cours de coulage, massifs de fondation et zone protégée par une bâche bleue", "titre": "Dalle et fondations", "meta": "" },
-        { "fichier": "realisations/nolout-construction-chantier-nuit.jpg", "alt": "Vue aérienne de nuit du chantier, avec la pompe à béton et les zones de fondation en préparation", "titre": "Le chantier de nuit", "meta": "" }
+        { "fichier": "realisations/nolout-construction-vue-ensemble.jpg", "alt": "Vue aérienne de nuit d’un grand chantier en sous-sol : dalles coulées, zone bâchée en bleu et fondations, éclairés par un projecteur", "titre": "Vue d’ensemble du chantier", "meta": "", "largeur": 1600, "hauteur": 1200 },
+        { "fichier": "realisations/nolout-construction-coulage-dalle.jpg", "alt": "Vue du ciel, de nuit : une équipe en gilets orange étale le béton frais d’une dalle", "titre": "Coulage d’une dalle", "meta": "", "largeur": 1600, "hauteur": 1200 },
+        { "fichier": "realisations/nolout-construction-beton-poteaux.jpg", "alt": "Ouvriers coulant le béton au pied des poteaux, vus du ciel pendant un chantier de nuit", "titre": "Béton coulé entre les poteaux", "meta": "", "largeur": 1600, "hauteur": 1200 },
+        { "fichier": "realisations/nolout-construction-dalle-fondations.jpg", "alt": "Vue aérienne de nuit : dalle en cours de coulage, massifs de fondation et zone protégée par une bâche bleue", "titre": "Dalle et fondations", "meta": "", "largeur": 1600, "hauteur": 1200 },
+        { "fichier": "realisations/nolout-construction-chantier-nuit.jpg", "alt": "Vue aérienne de nuit du chantier, avec la pompe à béton et les zones de fondation en préparation", "titre": "Le chantier de nuit", "meta": "", "largeur": 1600, "hauteur": 1200 }
       ]
     },
     {
@@ -187,8 +187,14 @@
       "image": { "fichier": "", "alt": "", "ajustement": "cover", "fond": "" },
       "exempleMessage": "Votre marque, l’objectif de la campagne et l’échéance.",
       "galerie": [
-        { "fichier": "realisations/nolout-communication-portrait.jpg", "alt": "Portrait en studio réalisé par Nolout Communication", "titre": "Portrait en studio", "meta": "" },
-        { "fichier": "realisations/nolout-communication-evenement.jpg", "alt": "Intervenante au micro lors d’un événement photographié par Nolout Communication, en noir et blanc", "titre": "Couverture d’événement", "meta": "" }
+        { "fichier": "realisations/nolout-communication-portrait.jpg", "alt": "Portrait en studio réalisé par Nolout Communication", "titre": "Portrait en studio", "meta": "", "largeur": 1200, "hauteur": 750 },
+        { "fichier": "realisations/nolout-communication-evenement.jpg", "alt": "Intervenante au micro lors d’un événement photographié par Nolout Communication, en noir et blanc", "titre": "Couverture d’événement", "meta": "", "largeur": 1200, "hauteur": 750 },
+        { "fichier": "realisations/nolout-communication-save-the-date-1.jpg", "alt": "Couple enlacé et souriant en studio, lui en chemise noire pailletée, elle en robe blanche, sur fond marron", "titre": "Complicité", "meta": "Séance save the date", "largeur": 1067, "hauteur": 1600 },
+        { "fichier": "realisations/nolout-communication-save-the-date-2.jpg", "alt": "Couple posant debout en studio, elle en longue robe blanche à cape, lui en chemise noire, sur fond marron", "titre": "Élégance en blanc et noir", "meta": "Séance save the date", "largeur": 1067, "hauteur": 1600 },
+        { "fichier": "realisations/nolout-communication-save-the-date-3.jpg", "alt": "Femme en robe orange assise au sol contre un fauteuil, son compagnon en chemise blanche assis derrière elle", "titre": "Pause en orange", "meta": "Séance save the date", "largeur": 1067, "hauteur": 1600 },
+        { "fichier": "realisations/nolout-communication-save-the-date-4.jpg", "alt": "Femme en robe orange assise dans un fauteuil gris, son compagnon debout derrière elle en chemise blanche", "titre": "Orange et blanc", "meta": "Séance save the date", "largeur": 1067, "hauteur": 1600 },
+        { "fichier": "realisations/nolout-communication-save-the-date-5.jpg", "alt": "Couple en tenues marron et blanc, lui assis sur un fauteuil, elle appuyée contre lui, sur fond marron", "titre": "Tons chocolat", "meta": "Séance save the date", "largeur": 1067, "hauteur": 1600 },
+        { "fichier": "realisations/nolout-communication-save-the-date-6.jpg", "alt": "Couple enlacé, visage contre visage, photographié en noir et blanc", "titre": "En noir et blanc", "meta": "Séance save the date", "largeur": 1067, "hauteur": 1600 }
       ]
     },
     {
