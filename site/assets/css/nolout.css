@@ -1578,6 +1578,9 @@ textarea.nl-champ__input { height: auto; min-height: 150px; padding: 12px 14px; 
    --r : rapport largeur / hauteur de la photo, posé par lib/rendu.js ; --nl-rangee : hauteur visée. */
 .nl-galerie__grille { --nl-rangee: 260px; display: flex; flex-wrap: wrap; gap: 16px; }
 .nl-galerie__grille::after { content: ""; flex: 999 1 0; }  /* dernière rangée : pas d'étirement */
+@media (max-width: 960px) {
+  .nl-galerie__grille { --nl-rangee: 200px; }  /* tablette : deux photos en largeur par rangée */
+}
 .nl-galerie__item {
   flex: var(--r, 1.33) 1 calc(var(--r, 1.33) * var(--nl-rangee));
   display: flex; flex-direction: column; gap: 10px;
