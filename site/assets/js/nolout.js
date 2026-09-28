@@ -1,6 +1,6 @@
 /* NOLOUT SARLU — interactions du site (sans dépendance).
- * Mégamenu, menu mobile, schéma des départements, compteurs, publicité vidéo, galeries de réalisations,
- * formulaire de contact. */
+ * Mégamenu, menu mobile, schéma des départements, compteurs, témoignages, bloc d'appel, publicité vidéo,
+ * galeries de réalisations, formulaire de contact. */
 (() => {
   'use strict';
 
@@ -223,6 +223,59 @@
       t.style.setProperty('--delai', `${i * 0.12}s`);
       t.classList.add('is-attente');
       ioTemoignages.observe(t);
+    });
+  }
+
+  /* ── Bloc « Un projet ? Parlons-en. » : entrée soignée, faisceau doré, halo qui suit la souris ──
+   * À l'arrivée à l'écran, le bloc se pose, le titre monte mot par mot, puis le texte et les boutons.
+   * Un faisceau doré fait le tour du cadre tant que le bloc est visible (arrêté sinon). Sur ordinateur,
+   * un halo doré suit le pointeur. Rien de tout cela si le visiteur a réduit les animations. */
+  if (!reduit && 'IntersectionObserver' in window) {
+    $$('.nl-cta').forEach((cta) => {
+      const titre = $('h2', cta);
+      if (titre && !titre.children.length) {
+        // Coupure aux espaces ordinaires : « projet ? » reste d'un bloc (espace insécable)
+        const mots = titre.textContent.trim().split(' ');
+        titre.textContent = '';
+        mots.forEach((mot, i) => {
+          const masque = document.createElement('span');
+          masque.className = 'nl-cta__masque';
+          const span = document.createElement('span');
+          span.className = 'nl-cta__mot';
+          span.style.setProperty('--i', String(i));
+          span.textContent = mot;
+          masque.append(span);
+          titre.append(masque);
+          if (i < mots.length - 1) titre.append(' ');
+        });
+      }
+      cta.classList.add('is-attente');
+      let revele = false;
+      new IntersectionObserver(([entree]) => {
+        cta.classList.toggle('is-actif', entree.isIntersecting);
+        if (!entree.isIntersecting || revele) return;
+        revele = true;
+        requestAnimationFrame(() => {
+          cta.classList.replace('is-attente', 'is-entree');
+          // Fin de l'entrée : les boutons retrouvent leurs propres transitions
+          setTimeout(() => cta.classList.remove('is-entree'), 2000);
+        });
+      }, { threshold: 0.25 }).observe(cta);
+
+      if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        let image = 0;
+        cta.addEventListener('pointermove', (e) => {
+          if (image) return;
+          image = requestAnimationFrame(() => {
+            image = 0;
+            const r = cta.getBoundingClientRect();
+            cta.style.setProperty('--nl-halo-x', `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}%`);
+            cta.style.setProperty('--nl-halo-y', `${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`);
+          });
+        });
+        cta.addEventListener('pointerenter', () => cta.classList.add('is-survol'));
+        cta.addEventListener('pointerleave', () => cta.classList.remove('is-survol'));
+      }
     });
   }
 

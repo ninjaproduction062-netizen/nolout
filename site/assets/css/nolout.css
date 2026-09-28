@@ -995,6 +995,10 @@ a.nl-carte:hover, .nl-carte--survol:hover { border-color: var(--nl-bord-35); }
 .nl-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Bloc d'appel final */
+@property --nl-faisceau { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+@property --nl-halo-x { syntax: "<percentage>"; inherits: false; initial-value: 50%; }
+@property --nl-halo-y { syntax: "<percentage>"; inherits: false; initial-value: 50%; }
+@property --nl-halo-a { syntax: "<number>"; inherits: false; initial-value: 0; }
 .nl-cta {
   position: relative;
   overflow: hidden;
@@ -1002,8 +1006,54 @@ a.nl-carte:hover, .nl-carte--survol:hover { border-color: var(--nl-bord-35); }
   padding: clamp(40px, 7vw, 88px) clamp(24px, 5vw, 72px);
   border: 1px solid rgba(233, 168, 37, .3);
   border-radius: var(--nl-r-cta);
-  background: var(--nl-navy-900);
+  /* Halo doré qui suit la souris (nolout.js), invisible tant que le pointeur n'est pas sur le bloc */
+  background:
+    radial-gradient(520px circle at var(--nl-halo-x) var(--nl-halo-y), rgba(242, 193, 78, calc(.14 * var(--nl-halo-a))), transparent 65%),
+    var(--nl-navy-900);
   text-align: center;
+  transition: --nl-halo-a .5s ease;
+}
+.nl-cta.is-survol { --nl-halo-a: 1; }
+/* Faisceau doré qui fait le tour du cadre tant que le bloc est à l'écran (classe is-actif, nolout.js) */
+.nl-cta::after {
+  content: "";
+  position: absolute; inset: 0;
+  padding: 1.5px;
+  border-radius: calc(var(--nl-r-cta) - 1px);
+  background: conic-gradient(from var(--nl-faisceau), transparent 0 62%, rgba(242, 193, 78, .85) 88%, #FFF1CC 92%, rgba(242, 193, 78, .25) 96%, transparent);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  animation: nl-faisceau 6s linear infinite paused;
+  transition: opacity .8s ease;
+  pointer-events: none;
+}
+.nl-cta.is-actif::after { opacity: 1; animation-play-state: running; }
+/* Entrée : le bloc se pose, le titre monte mot par mot, puis le texte et les boutons */
+.nl-cta__masque { display: inline-block; overflow: hidden; vertical-align: top; padding: .1em .02em .14em; margin: -.1em -.02em -.14em; }
+.nl-cta__mot { display: inline-block; }
+.nl-cta.is-attente { opacity: 0; transform: translateY(32px) scale(.98); }
+.nl-cta.is-attente .nl-cta__mot { transform: translateY(115%); }
+.nl-cta.is-attente > p,
+.nl-cta.is-attente .nl-actions > * { opacity: 0; transform: translateY(16px); }
+.nl-cta.is-entree { transition: opacity .9s ease, transform 1s cubic-bezier(.2, .75, .2, 1), --nl-halo-a .5s ease; }
+.nl-cta.is-entree .nl-cta__mot { transition: transform .9s cubic-bezier(.2, .75, .2, 1) calc(.2s + var(--i, 0) * .08s); }
+.nl-cta.is-entree > p { transition: opacity .8s ease .55s, transform .9s cubic-bezier(.2, .75, .2, 1) .55s; }
+.nl-cta.is-entree .nl-actions > * { transition: opacity .7s ease .75s, transform .8s cubic-bezier(.2, .75, .2, 1) .75s; }
+.nl-cta.is-entree .nl-actions > :nth-child(2) { transition-delay: .87s; }
+/* Reflet qui traverse « Demander un devis » au survol */
+.nl-cta .nl-btn--or { position: relative; overflow: hidden; }
+.nl-cta .nl-btn--or::after {
+  content: "";
+  position: absolute; top: 0; bottom: 0; left: 0;
+  width: 40%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .55), transparent);
+  transform: translateX(-130%) skewX(-18deg);
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .nl-cta .nl-btn--or:hover::after { animation: nl-reflet .9s ease; }
 }
 .nl-cta::before {
   content: "";
@@ -1579,6 +1629,8 @@ textarea.nl-champ__input { height: auto; min-height: 150px; padding: 12px 14px; 
 
 /* ── Animations ─────────────────────────────────────────────────────────── */
 @keyframes nl-rotation { to { transform: rotate(360deg); } }
+@keyframes nl-faisceau { to { --nl-faisceau: 360deg; } }
+@keyframes nl-reflet { to { transform: translateX(330%) skewX(-18deg); } }
 @keyframes nl-defile { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
